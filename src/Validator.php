@@ -8,18 +8,18 @@ final class Validator
     private array $rules;
 
     /**
-     * @phpstan-param array<string, mixed> $data
+     * @phpstan-param array<string, mixed> $values
      *
-     * @param mixed[] $data
+     * @param mixed[] $values
      */
-    public function validate(array $data) : Result
+    public function validate(array $values) : Result
     {
         $errors = [];
         $validKeys = [];
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $key => $rules) {
-            $willValidateValue = $data[$key] ?? null;
+            $willValidateValue = $values[$key] ?? null;
             $valid = true;
 
             /** @var RuleInterface $rule */
@@ -35,7 +35,7 @@ final class Validator
             }
         }
 
-        return new Result($data, $errors, $validKeys);
+        return new Result($values, $errors, $validKeys);
     }
 
     public function define(string $attributeKey, string $attributeName) : RuleCollection
