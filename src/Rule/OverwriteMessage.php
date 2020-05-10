@@ -22,6 +22,8 @@ final class OverwriteMessage implements RuleInterface
 
     public function getMessage(string $attributeName) : string
     {
+        unset($attributeName);
+
         return $this->message;
     }
 }
