@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Yahiru\Validator;
 
+use Yahiru\Validator\Rule\OverwriteMessage;
+
 /**
  * @implements \IteratorAggregate<RuleInterface>
  */
@@ -26,8 +28,12 @@ final class RuleCollection implements \IteratorAggregate
     /**
      * @return $this
      */
-    public function add(RuleInterface $rule) : self
+    public function add(RuleInterface $rule, string $overwriteMessage = null) : self
     {
+        if ($overwriteMessage !== null) {
+            $rule = new OverwriteMessage($rule, $overwriteMessage);
+        }
+
         $this->rules[] = $rule;
 
         return $this;

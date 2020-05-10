@@ -27,6 +27,10 @@ final class ValidatorTest extends TestCase
             ->add($rule)
         ;
         $validator
+            ->define('email', 'メールアドレス')
+            ->add($rule, 'overwrite')
+        ;
+        $validator
             ->define('profile', 'プロフィール')
             ->add($rule)
         ;
@@ -34,9 +38,13 @@ final class ValidatorTest extends TestCase
         $result = $validator->validate(['profile' => 'hello']);
 
         $this->assertTrue($result->hasErrors());
-        $this->assertInstanceOf(Error::class, $result->getErrors()[0]);
+        $this->assertCount(2, $result->getErrors());
+
         $this->assertSame('name', $result->getErrors()[0]->getKey());
         $this->assertSame('名前を入力してください。', $result->getErrors()[0]->getMessage());
+
+        $this->assertSame('email', $result->getErrors()[1]->getKey());
+        $this->assertSame('overwrite', $result->getErrors()[1]->getMessage());
 
         $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
     }
