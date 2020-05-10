@@ -4,7 +4,7 @@ namespace Yahiru\Validator;
 
 final class Validator
 {
-    /** @var array<string, Rules> */
+    /** @var array<string, RuleCollection> */
     private array $rules;
 
     /**
@@ -17,7 +17,7 @@ final class Validator
         $errors = [];
         $validKeys = [];
 
-        /** @var Rules $rules */
+        /** @var RuleCollection $rules */
         foreach ($this->rules as $key => $rules) {
             $willValidateValue = $data[$key] ?? null;
             $valid = true;
@@ -38,8 +38,8 @@ final class Validator
         return new Result($data, $errors, $validKeys);
     }
 
-    public function define(string $attributeKey, string $attributeName) : Rules
+    public function define(string $attributeKey, string $attributeName) : RuleCollection
     {
-        return $this->rules[$attributeKey] = new Rules($attributeName);
+        return $this->rules[$attributeKey] = new RuleCollection($attributeName);
     }
 }

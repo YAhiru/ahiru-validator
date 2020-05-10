@@ -5,7 +5,7 @@ namespace Yahiru\Validator;
 /**
  * @implements \IteratorAggregate<RuleInterface>
  */
-final class Rules implements \IteratorAggregate
+final class RuleCollection implements \IteratorAggregate
 {
     /**
      * @phpstan-var RuleInterface[]
