@@ -13,9 +13,7 @@ final class ValidatorTest extends TestCase
              */
             public function isValid($value) : bool
             {
-                unset($value);
-
-                return false;
+                return (bool) $value;
             }
 
             public function getMessage(string $attributeName) : string

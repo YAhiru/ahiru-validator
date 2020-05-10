@@ -15,20 +15,27 @@ final class Validator
     public function validate(array $data) : Result
     {
         $errors = [];
+        $validKeys = [];
 
         /** @var Rules $rules */
         foreach ($this->rules as $key => $rules) {
             $willValidateValue = $data[$key] ?? null;
+            $valid = true;
 
             /** @var RuleInterface $rule */
             foreach ($rules as $rule) {
                 if (! $rule->isValid($willValidateValue)) {
                     $errors[] = new Error($key, $rule->getMessage($rules->getAttributeName()));
+                    $valid = false;
                 }
+            }
+
+            if ($valid) {
+                $validKeys[] = $key;
             }
         }
 
-        return new Result($errors);
+        return new Result($data, $errors, $validKeys);
     }
 
     public function define(string $attributeKey, string $attributeName) : Rules
