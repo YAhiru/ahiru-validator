@@ -4,6 +4,9 @@ namespace Yahiru\Validator;
 
 final class Validator
 {
+    /** @var array<string, Rules> */
+    private array $rules;
+
     /**
      * @phpstan-param array<string, mixed> $data
      *
@@ -18,8 +21,8 @@ final class Validator
 
     public function define(string $attributeKey, string $attributeName) : Rules
     {
-        unset($attributeKey, $attributeName);
+        unset($attributeName);
 
-        return new Rules();
+        return $this->rules[$attributeKey] = new Rules();
     }
 }
