@@ -26,7 +26,7 @@ final class RuleCollection implements \IteratorAggregate
     /**
      * @return $this
      */
-    public function addRule(RuleInterface $rule) : self
+    public function add(RuleInterface $rule) : self
     {
         $this->rules[] = $rule;
 

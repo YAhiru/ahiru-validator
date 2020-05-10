@@ -24,11 +24,11 @@ final class ValidatorTest extends TestCase
 
         $validator
             ->define('name', '名前')
-            ->addRule($rule)
+            ->add($rule)
         ;
         $validator
             ->define('profile', 'プロフィール')
-            ->addRule($rule)
+            ->add($rule)
         ;
 
         $result = $validator->validate(['profile' => 'hello']);
