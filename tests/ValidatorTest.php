@@ -28,12 +28,18 @@ final class ValidatorTest extends TestCase
             ->define('name', '名前')
             ->addRule($rule)
         ;
+        $validator
+            ->define('profile', 'プロフィール')
+            ->addRule($rule)
+        ;
 
-        $result = $validator->validate([]);
+        $result = $validator->validate(['profile' => 'hello']);
 
         $this->assertTrue($result->hasErrors());
         $this->assertInstanceOf(Error::class, $result->getErrors()[0]);
         $this->assertSame('name', $result->getErrors()[0]->getKey());
         $this->assertSame('名前を入力してください。', $result->getErrors()[0]->getMessage());
+
+        $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
     }
 }
