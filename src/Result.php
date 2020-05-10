@@ -4,9 +4,20 @@ namespace Yahiru\Validator;
 
 final class Result
 {
+    /** @var string[] */
+    private array $errors;
+
+    /**
+     * @param string[] $errors
+     */
+    public function __construct(array $errors)
+    {
+        $this->errors = $errors;
+    }
+
     public function hasErrors() : bool
     {
-        return true;
+        return count($this->errors) > 0;
     }
 
     /**
@@ -14,6 +25,6 @@ final class Result
      */
     public function getErrors() : array
     {
-        return ['名前を入力してください。'];
+        return $this->errors;
     }
 }

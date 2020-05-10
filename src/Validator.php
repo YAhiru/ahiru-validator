@@ -13,7 +13,7 @@ final class Validator
     {
         unset($data);
 
-        return new Result();
+        return new Result(['名前を入力してください。']);
     }
 
     public function define(string $attributeKey, string $attributeName) : Rules
