@@ -13,13 +13,11 @@ final class Rules implements \IteratorAggregate
     private array $rules;
 
     /**
-     * @param mixed $rule
-     *
      * @return $this
      */
-    public function addRule($rule) : self
+    public function addRule(RuleInterface $rule) : self
     {
-        unset($rule);
+        $this->rules[] = $rule;
 
         return $this;
     }
