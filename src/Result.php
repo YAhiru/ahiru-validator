@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
-
 namespace Yahiru\Validator;
 
 final class Result
 {
-    public function hasErrors(): bool
+    public function hasErrors() : bool
     {
         return true;
     }
@@ -13,7 +12,7 @@ final class Result
     /**
      * @return string[]
      */
-    public function getErrors(): array
+    public function getErrors() : array
     {
         return ['名前を入力してください。'];
     }

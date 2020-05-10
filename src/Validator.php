@@ -1,22 +1,40 @@
 <?php
 declare(strict_types=1);
-
 namespace Yahiru\Validator;
 
 final class Validator
 {
-    public function validate(array $data): Result
+    /**
+     * @phpstan-param array<string, mixed> $data
+     *
+     * @param mixed[] $data
+     */
+    public function validate(array $data) : Result
     {
+        unset($data);
+
         return new Result();
     }
 
-    public function define(string $attributeKey, string $attributeName): self
+    /**
+     * @return $this
+     */
+    public function define(string $attributeKey, string $attributeName) : self
     {
+        unset($attributeKey, $attributeName);
+
         return $this;
     }
 
-    public function addRule($rule): self
+    /**
+     * @param mixed $rule
+     *
+     * @return $this
+     */
+    public function addRule($rule) : self
     {
+        unset($rule);
+
         return $this;
     }
 }

@@ -1,20 +1,24 @@
 <?php
 declare(strict_types=1);
-
 namespace Yahiru\Validator;
 
 final class ValidatorTest extends TestCase
 {
-    public function testValidate()
+    public function testValidate() : void
     {
         $validator = new Validator();
         $rule = new class implements RuleInterface {
-            public function isValid($value): bool
+            /**
+             * @param mixed $value
+             */
+            public function isValid($value) : bool
             {
+                unset($value);
+
                 return false;
             }
 
-            public function getMessage(string $attributeName): string
+            public function getMessage(string $attributeName) : string
             {
                 return $attributeName . 'を入力してください。';
             }
