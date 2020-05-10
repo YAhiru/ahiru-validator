@@ -16,25 +16,10 @@ final class Validator
         return new Result();
     }
 
-    /**
-     * @return $this
-     */
-    public function define(string $attributeKey, string $attributeName) : self
+    public function define(string $attributeKey, string $attributeName) : Rules
     {
         unset($attributeKey, $attributeName);
 
-        return $this;
-    }
-
-    /**
-     * @param mixed $rule
-     *
-     * @return $this
-     */
-    public function addRule($rule) : self
-    {
-        unset($rule);
-
-        return $this;
+        return new Rules();
     }
 }
