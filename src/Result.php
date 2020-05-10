@@ -4,11 +4,11 @@ namespace Yahiru\Validator;
 
 final class Result
 {
-    /** @var string[] */
+    /** @var Error[] */
     private array $errors;
 
     /**
-     * @param string[] $errors
+     * @param Error[] $errors
      */
     public function __construct(array $errors)
     {
@@ -21,7 +21,7 @@ final class Result
     }
 
     /**
-     * @return string[]
+     * @return Error[]
      */
     public function getErrors() : array
     {
