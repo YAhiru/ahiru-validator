@@ -27,7 +27,7 @@ final class ValidatorTest extends TestCase
 
         $result = $validator->validate([]);
 
-        $this->assertTrue($result->hasErros());
+        $this->assertTrue($result->hasErrors());
         $this->assertSame('名前を入力してください。', $result->getErrors()[0]);
     }
 }
