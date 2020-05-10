@@ -42,6 +42,11 @@ final class Result
         return $this->errors;
     }
 
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @return mixed[]
+     */
     public function getValidatedValues() : array
     {
         $validated = [];
