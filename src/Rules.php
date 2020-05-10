@@ -11,6 +11,17 @@ final class Rules implements \IteratorAggregate
      * @phpstan-var RuleInterface[]
      */
     private array $rules;
+    private string $attributeName;
+
+    public function __construct(string $attributeName)
+    {
+        $this->attributeName = $attributeName;
+    }
+
+    public function getAttributeName() : string
+    {
+        return $this->attributeName;
+    }
 
     /**
      * @return $this

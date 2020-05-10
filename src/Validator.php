@@ -14,15 +14,25 @@ final class Validator
      */
     public function validate(array $data) : Result
     {
-        unset($data);
+        $errors = [];
 
-        return new Result(['名前を入力してください。']);
+        /** @var Rules $rules */
+        foreach ($this->rules as $key => $rules) {
+            $willValidateValue = $data[$key] ?? null;
+
+            /** @var RuleInterface $rule */
+            foreach ($rules as $rule) {
+                if (! $rule->isValid($willValidateValue)) {
+                    $errors[] = $rule->getMessage($rules->getAttributeName());
+                }
+            }
+        }
+
+        return new Result($errors);
     }
 
     public function define(string $attributeKey, string $attributeName) : Rules
     {
-        unset($attributeName);
-
-        return $this->rules[$attributeKey] = new Rules();
+        return $this->rules[$attributeKey] = new Rules($attributeName);
     }
 }
