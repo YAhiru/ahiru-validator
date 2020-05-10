@@ -33,6 +33,7 @@ final class ValidatorTest extends TestCase
 
         $this->assertTrue($result->hasErrors());
         $this->assertInstanceOf(Error::class, $result->getErrors()[0]);
+        $this->assertSame('name', $result->getErrors()[0]->getKey());
         $this->assertSame('名前を入力してください。', $result->getErrors()[0]->getMessage());
     }
 }
