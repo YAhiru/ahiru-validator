@@ -1,0 +1,52 @@
+{
+  "name": "yahiru/ahiru-validator",
+  "description": "y_ahiru's validator",
+  "authors": [
+    {
+      "name": "yuhei yoshida",
+      "email": "yahiru1121@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpmd/phpmd": "^2.8",
+    "infection/infection": "^0.16",
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "squizlabs/php_codesniffer": "^3.5",
+    "phpunit/phpunit": "^9.0",
+    "phpstan/phpstan": "^0.12",
+    "phpstan/phpstan-phpunit": "^0.12.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yahiru\\Validator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Yahiru\\Validator\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": ["vendor/bin/phpunit"],
+    "if": "vendor/bin/infection --filter=$(git diff origin/master --diff-filter=AM --name-only | grep src/ | paste -sd \",\" -) --ignore-msi-with-no-mutations",
+    "tests": [
+      "@cs",
+      "vendor/bin/phpmd src,tests text ./phpmd.xml",
+      "@stan",
+      "@test"
+    ],
+    "coverage": ["php -d pcov.directory=./ -d pcov.exclude=./tests ./vendor/bin/phpunit --coverage-html=build/coverage"],
+    "cs": [
+      "vendor/bin/php-cs-fixer fix -v --dry-run",
+      "vendor/bin/phpcs --standard=phpcs.xml src;"
+    ],
+    "cs-fix": [
+      "vendor/bin/php-cs-fixer fix -v",
+      "vendor/bin/phpcbf src tests"
+    ],
+    "stan": "vendor/bin/phpstan analyse --no-progress"
+  }
+}
