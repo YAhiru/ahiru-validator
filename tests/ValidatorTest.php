@@ -48,4 +48,34 @@ final class ValidatorTest extends TestCase
 
         $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
     }
+
+    public function testNullable() : void
+    {
+        $validator = new Validator();
+        $rule = new class implements RuleInterface {
+            /**
+             * @param mixed $value
+             */
+            public function isValid($value) : bool
+            {
+                return (bool) $value;
+            }
+
+            public function getMessage(string $attributeName) : string
+            {
+                return $attributeName . 'を入力してください。';
+            }
+        };
+
+        $validator
+            ->define('name', '名前')
+            ->add(new Nullable())
+            ->add($rule)
+        ;
+
+        $result = $validator->validate(['name' => null]);
+
+        $this->assertFalse($result->hasErrors());
+        $this->assertSame(['name' => null], $result->getValidatedValues());
+    }
 }
