@@ -22,7 +22,7 @@ final class Validator
             $willValidateValue = $values[$key] ?? null;
             $valid = true;
 
-            if (! ($willValidateValue === null && $rules->isNullable())) {
+            if (! $this->isSkip($willValidateValue, $rules)) {
 
                 /** @var RuleInterface $rule */
                 foreach ($rules as $rule) {
@@ -44,5 +44,13 @@ final class Validator
     public function define(string $attributeKey, string $attributeName) : RuleCollection
     {
         return $this->rules[$attributeKey] = new RuleCollection($attributeName);
+    }
+
+    /**
+     * @param mixed $willValidateValue
+     */
+    private function isSkip($willValidateValue, RuleCollection $rules) : bool
+    {
+        return $willValidateValue === null && $rules->isNullable();
     }
 }
