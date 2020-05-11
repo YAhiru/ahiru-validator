@@ -10,16 +10,21 @@ final class Result
      * @var mixed[]
      */
     private array $rawValues;
-    /** @var Error[] */
+    /**
+     * @phpstan-var array<string, array<string>>
+     *
+     * @var string[][]
+     */
     private array $errors;
     /** @var string[] */
     private array $validKeys;
 
     /**
      * @phpstan-param array<string, mixed> $rawValues
+     * @phpstan-param array<string, array<string>> $errors
      *
      * @param mixed[]  $rawValues
-     * @param Error[]  $errors
+     * @param array[]  $errors
      * @param string[] $validKeys
      */
     public function __construct(array $rawValues, array $errors, array $validKeys)
@@ -35,9 +40,19 @@ final class Result
     }
 
     /**
-     * @return Error[]
+     * @return string[]
      */
-    public function getErrors() : array
+    public function getErrors(string $key) : array
+    {
+        return $this->errors[$key] ?? [];
+    }
+
+    /**
+     * @phpstan-return array<string, array<string>>
+     *
+     * @return string[][]
+     */
+    public function getAllErrors() : array
     {
         return $this->errors;
     }

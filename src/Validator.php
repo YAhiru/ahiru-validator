@@ -27,7 +27,7 @@ final class Validator
                 /** @var RuleInterface $rule */
                 foreach ($rules as $rule) {
                     if (! $rule->isValid($willValidateValue)) {
-                        $errors[] = new Error($key, $rule->getMessage($rules->getAttributeName()));
+                        $errors[$key][] = $rule->getMessage($rules->getAttributeName());
                         $valid = false;
                     }
                 }

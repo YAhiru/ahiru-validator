@@ -40,13 +40,10 @@ final class ValidatorTest extends TestCase
         $result = $validator->validate(['profile' => 'hello']);
 
         $this->assertTrue($result->hasErrors());
-        $this->assertCount(2, $result->getErrors());
+        $this->assertCount(2, $result->getAllErrors());
 
-        $this->assertSame('name', $result->getErrors()[0]->getKey());
-        $this->assertSame('名前を入力してください。', $result->getErrors()[0]->getMessage());
-
-        $this->assertSame('email', $result->getErrors()[1]->getKey());
-        $this->assertSame('overwrite', $result->getErrors()[1]->getMessage());
+        $this->assertSame('名前を入力してください。', $result->getErrors('name')[0]);
+        $this->assertSame('overwrite', $result->getErrors('email')[0]);
 
         $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
     }
