@@ -58,4 +58,12 @@ final class RuleCollection implements \IteratorAggregate
 
         return false;
     }
+
+    /**
+     * @param mixed $value
+     */
+    public function isNovalidate($value) : bool
+    {
+        return $value === null && $this->isNullable();
+    }
 }
