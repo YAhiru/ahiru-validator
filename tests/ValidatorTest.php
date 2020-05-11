@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Yahiru\Validator;
 
+use Yahiru\Validator\Rule\Nullable;
+
 final class ValidatorTest extends TestCase
 {
     public function testValidate() : void

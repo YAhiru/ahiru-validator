@@ -22,11 +22,14 @@ final class Validator
             $willValidateValue = $values[$key] ?? null;
             $valid = true;
 
-            /** @var RuleInterface $rule */
-            foreach ($rules as $rule) {
-                if (! $rule->isValid($willValidateValue)) {
-                    $errors[] = new Error($key, $rule->getMessage($rules->getAttributeName()));
-                    $valid = false;
+            if (! ($willValidateValue === null && $rules->isNullable())) {
+
+                /** @var RuleInterface $rule */
+                foreach ($rules as $rule) {
+                    if (! $rule->isValid($willValidateValue)) {
+                        $errors[] = new Error($key, $rule->getMessage($rules->getAttributeName()));
+                        $valid = false;
+                    }
                 }
             }
 

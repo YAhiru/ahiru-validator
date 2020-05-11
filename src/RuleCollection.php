@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Yahiru\Validator;
 
+use Yahiru\Validator\Rule\Nullable;
 use Yahiru\Validator\Rule\OverwriteMessage;
 
 /**
@@ -45,5 +46,16 @@ final class RuleCollection implements \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->rules);
+    }
+
+    public function isNullable() : bool
+    {
+        foreach ($this->rules as $rule) {
+            if ($rule instanceof Nullable) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
