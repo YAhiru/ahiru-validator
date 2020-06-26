@@ -15,14 +15,11 @@ final class Regex implements RuleInterface
 
     public function isValid($value) : bool
     {
-        if (is_int($value) || is_float($value)) {
-            $value = (string) $value;
-        }
-        if (! is_string($value)) {
+        if (! Helper::isStringable($value)) {
             return false;
         }
 
-        return preg_match($this->regex, $value) === 1;
+        return preg_match($this->regex, (string) $value) === 1;
     }
 
     public function getMessage(string $attributeName) : string
