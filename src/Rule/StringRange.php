@@ -31,6 +31,6 @@ final class StringRange implements RuleInterface
 
     public function getMessage(string $attributeName) : string
     {
-        return sprintf('%1$s must be between %2$s and %3$s characters.', $attributeName, $this->max, $this->min);
+        return sprintf('%1$s must be between %2$s and %3$s characters.', $attributeName, $this->min, $this->max);
     }
 }
