@@ -20,6 +20,25 @@ final class Input
      */
     public function fetch(string $key)
     {
-        return $this->data[$key] ?? null;
+        return self::recursiveFetch(explode('.', $key), $this->data);
+    }
+
+    /**
+     * @param string[] $keys
+     * @param mixed    $input
+     *
+     * @return null|mixed
+     */
+    private static function recursiveFetch(array $keys, $input)
+    {
+        $key = array_shift($keys);
+        if ($key === null) {
+            return $input;
+        }
+        if (! is_array($input)) {
+            return;
+        }
+
+        return self::recursiveFetch($keys, $input[$key] ?? null);
     }
 }

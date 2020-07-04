@@ -25,5 +25,6 @@ final class InputTest extends TestCase
         $this->assertSame($data['key1'], $input->fetch('key1'));
         $this->assertSame($data['key2'], $input->fetch('key2'));
         $this->assertSame($data['key3'], $input->fetch('key3'));
+        $this->assertSame($data['key2'][0], $input->fetch('key2.0'));
     }
 }
