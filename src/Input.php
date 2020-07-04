@@ -23,11 +23,10 @@ final class Input
     /**
      * @param string[] $keys
      * @param mixed    $input
-     * @param mixed[]  $result
      *
      * @return array<int, mixed>
      */
-    private static function recursiveMatch(array $keys, $input, array $result = []) : array
+    private static function recursiveMatch(array $keys, $input) : array
     {
         $key = array_shift($keys);
         if ($key === null) {
