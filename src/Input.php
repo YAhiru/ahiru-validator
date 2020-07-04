@@ -15,40 +15,36 @@ final class Input
         $this->data = $data;
     }
 
-    /**
-     * @return mixed
-     */
-    public function fetch(string $key)
+    public function match(string $key) : array
     {
-        return self::recursiveFetch(explode('.', $key), $this->data);
+        return self::recursiveMatch(explode('.', $key), $this->data);
     }
 
     /**
      * @param string[] $keys
      * @param mixed    $input
+     * @param mixed[]  $result
      *
-     * @return null|mixed
+     * @return array<int, mixed>
      */
-    private static function recursiveFetch(array $keys, $input)
+    private static function recursiveMatch(array $keys, $input, array $result = []) : array
     {
         $key = array_shift($keys);
         if ($key === null) {
-            return $input;
+            return [$input];
         }
         if (! is_array($input)) {
-            return;
+            return [null];
         }
         if ($key === '*') {
             $result = [];
             foreach ($input as $item) {
-                $result[] = self::recursiveFetch($keys, $item);
+                $result = array_merge($result, self::recursiveMatch($keys, $item));
             }
 
-            return in_array('*', $keys, true)
-                ? array_merge([], ...$result)
-                : $result;
+            return $result;
         }
 
-        return self::recursiveFetch($keys, $input[$key] ?? null);
+        return self::recursiveMatch($keys, $input[$key] ?? null);
     }
 }

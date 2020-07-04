@@ -14,27 +14,31 @@ final class Validator
      */
     public function validate(array $values) : Result
     {
+        $input = new Input($values);
         $errors = [];
         $validKeys = [];
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $key => $rules) {
-            $willValidateValue = $values[$key] ?? null;
-            $valid = true;
+            $willValidateValues = $input->match($key);
 
-            if (! $rules->isNovalidate($willValidateValue)) {
+            foreach ($willValidateValues as $willValidateValue) {
+                $valid = true;
 
-                /** @var RuleInterface $rule */
-                foreach ($rules as $rule) {
-                    if (! $rule->isValid($willValidateValue)) {
-                        $errors[$key][] = $rule->getMessage($rules->getAttributeName());
-                        $valid = false;
+                if (! $rules->isNovalidate($willValidateValue)) {
+
+                    /** @var RuleInterface $rule */
+                    foreach ($rules as $rule) {
+                        if (! $rule->isValid($willValidateValue)) {
+                            $errors[$key][] = $rule->getMessage($rules->getAttributeName());
+                            $valid = false;
+                        }
                     }
                 }
-            }
 
-            if ($valid) {
-                $validKeys[] = $key;
+                if ($valid) {
+                    $validKeys[] = $key;
+                }
             }
         }
 

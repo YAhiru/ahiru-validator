@@ -4,7 +4,7 @@ namespace Yahiru\Validator;
 
 final class InputTest extends TestCase
 {
-    public function testFetch()
+    public function testMatch()
     {
         $data = [
             'key1' => 'value',
@@ -24,33 +24,33 @@ final class InputTest extends TestCase
         ];
 
         $input = new Input($data);
-        $this->assertSame($data['key1'], $input->fetch('key1'));
-        $this->assertSame($data['key2'], $input->fetch('key2'));
-        $this->assertSame($data['key2'][0], $input->fetch('key2.0'));
-        $this->assertSame($data['key3'][1], $input->fetch('key3.1'));
+        $this->assertSame([$data['key1']], $input->match('key1'));
+        $this->assertSame([$data['key2']], $input->match('key2'));
+        $this->assertSame([$data['key2'][0]], $input->match('key2.0'));
+        $this->assertSame([$data['key3'][1]], $input->match('key3.1'));
         $this->assertSame(
             [$data['key3'][0]['name'], $data['key3'][1]['name']],
-            $input->fetch('key3.*.name')
+            $input->match('key3.*.name')
         );
         $this->assertSame(
             [null, $data['key2'][0], $data['key3'][0]],
-            $input->fetch('*.0')
+            $input->match('*.0')
         );
-        $this->assertSame($data['key2'], $input->fetch('key2.*'));
+        $this->assertSame($data['key2'], $input->match('key2.*'));
         $this->assertSame(
             [
                 $data['key3'][0]['name'], $data['key3'][0]['age'], $data['key3'][0]['websites'],
                 $data['key3'][1]['name'], $data['key3'][1]['age'], $data['key3'][1]['websites']
             ],
-            $input->fetch('key3.*.*')
+            $input->match('key3.*.*')
         );
         $this->assertSame(
             [$data['key3'][0]['websites'][0], $data['key3'][1]['websites'][0], $data['key3'][1]['websites'][1]],
-            $input->fetch('key3.*.websites.*')
+            $input->match('key3.*.websites.*')
         );
         $this->assertSame(
             [null, null, $data['key3'][0]['websites'][0], null, null, $data['key3'][1]['websites'][0]],
-            $input->fetch('key3.*.*.0')
+            $input->match('key3.*.*.0')
         );
     }
 }
