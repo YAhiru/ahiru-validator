@@ -38,6 +38,14 @@ final class Input
         if (! is_array($input)) {
             return;
         }
+        if ($key === '*') {
+            $result = [];
+            foreach ($input as $item) {
+                $result[] = self::recursiveFetch($keys, $item);
+            }
+
+            return $result;
+        }
 
         return self::recursiveFetch($keys, $input[$key] ?? null);
     }
