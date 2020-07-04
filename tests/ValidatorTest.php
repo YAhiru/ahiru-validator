@@ -5,6 +5,7 @@ namespace Yahiru\Validator;
 use Yahiru\Validator\Rule\ArrayMax;
 use Yahiru\Validator\Rule\Nullable;
 use Yahiru\Validator\Rule\Regex;
+use Yahiru\Validator\Rule\Required;
 use Yahiru\Validator\Rule\StringRange;
 
 final class ValidatorTest extends TestCase
@@ -12,32 +13,17 @@ final class ValidatorTest extends TestCase
     public function testValidate() : void
     {
         $validator = new Validator();
-        $rule = new class implements RuleInterface {
-            /**
-             * @param mixed $value
-             */
-            public function isValid($value) : bool
-            {
-                return (bool) $value;
-            }
-
-            public function getMessage(string $attributeName) : string
-            {
-                return $attributeName . 'を入力してください。';
-            }
-        };
-
         $validator
             ->define('name', '名前')
-            ->add($rule)
+            ->add(new Required())
         ;
         $validator
             ->define('email', 'メールアドレス')
-            ->add($rule, 'overwrite')
+            ->add(new Required(), 'overwrite')
         ;
         $validator
             ->define('profile', 'プロフィール')
-            ->add($rule)
+            ->add(new Required())
         ;
 
         $result = $validator->validate(['profile' => 'hello']);
@@ -45,7 +31,7 @@ final class ValidatorTest extends TestCase
         $this->assertTrue($result->hasErrors());
         $this->assertCount(2, $result->getAllErrors());
 
-        $this->assertSame('名前を入力してください。', $result->getErrors('name')[0]);
+        $this->assertSame('名前 is required.', $result->getErrors('name')[0]);
         $this->assertSame('overwrite', $result->getErrors('email')[0]);
 
         $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
@@ -54,25 +40,11 @@ final class ValidatorTest extends TestCase
     public function testNullable() : void
     {
         $validator = new Validator();
-        $rule = new class implements RuleInterface {
-            /**
-             * @param mixed $value
-             */
-            public function isValid($value) : bool
-            {
-                return (bool) $value;
-            }
-
-            public function getMessage(string $attributeName) : string
-            {
-                return $attributeName . 'を入力してください。';
-            }
-        };
 
         $validator
             ->define('name', '名前')
             ->add(new Nullable())
-            ->add($rule)
+            ->add(new StringRange(10, 100))
         ;
 
         $result = $validator->validate(['name' => null]);
