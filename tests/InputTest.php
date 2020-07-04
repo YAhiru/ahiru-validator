@@ -12,11 +12,13 @@ final class InputTest extends TestCase
             'key3' => [
                 [
                     'name' => 'foo',
-                    'age' => 20
+                    'age' => 20,
+                    'websites' => ['https://foo.com']
                 ],
                 [
                     'name' => 'bar',
-                    'age' => 21
+                    'age' => 21,
+                    'websites' => ['https://bar.com', 'https://baz.com']
                 ],
             ]
         ];
@@ -35,5 +37,20 @@ final class InputTest extends TestCase
             $input->fetch('*.0')
         );
         $this->assertSame($data['key2'], $input->fetch('key2.*'));
+        $this->assertSame(
+            [
+                $data['key3'][0]['name'], $data['key3'][0]['age'], $data['key3'][0]['websites'],
+                $data['key3'][1]['name'], $data['key3'][1]['age'], $data['key3'][1]['websites']
+            ],
+            $input->fetch('key3.*.*')
+        );
+        $this->assertSame(
+            [$data['key3'][0]['websites'][0], $data['key3'][1]['websites'][0], $data['key3'][1]['websites'][1]],
+            $input->fetch('key3.*.websites.*')
+        );
+        $this->assertSame(
+            [null, null, $data['key3'][0]['websites'][0], null, null, $data['key3'][1]['websites'][0]],
+            $input->fetch('key3.*.*.0')
+        );
     }
 }
