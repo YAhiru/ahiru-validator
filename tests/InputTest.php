@@ -34,5 +34,6 @@ final class InputTest extends TestCase
             [null, $data['key2'][0], $data['key3'][0]],
             $input->fetch('*.0')
         );
+        $this->assertSame($data['key2'], $input->fetch('key2.*'));
     }
 }
