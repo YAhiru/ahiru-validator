@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace Yahiru\Validator;
 
 use Yahiru\Validator\Rule\ArrayMax;
-use Yahiru\Validator\Rule\Each;
 use Yahiru\Validator\Rule\Nullable;
 use Yahiru\Validator\Rule\Regex;
 use Yahiru\Validator\Rule\StringRange;
@@ -88,8 +87,10 @@ final class ValidatorTest extends TestCase
         $validator
             ->define('tags', 'タグ')
             ->add(new ArrayMax(3))
-            ->add(new Each(new Regex('/\A[a-z]+\z/')))
-            ->add(new Each(new StringRange(1, 3)))
+        ;
+        $validator->define('tags.*', 'タグ')
+            ->add(new Regex('/\A[a-z]+\z/'))
+            ->add(new StringRange(1, 3))
         ;
 
         $result = $validator->validate(['tags' => ['a', 'bbbb', '3', 'd']]);
@@ -98,10 +99,15 @@ final class ValidatorTest extends TestCase
         $this->assertSame(
             [
                 'size of タグ must be smaller than 3.',
-                'タグ is invalid format.',
-                'タグ must be between 1 and 3 characters.',
             ],
             $result->getErrors('tags')
+        );
+        $this->assertSame(
+            [
+                'タグ must be between 1 and 3 characters.',
+                'タグ is invalid format.',
+            ],
+            $result->getErrors('tags.*')
         );
     }
 }
