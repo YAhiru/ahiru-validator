@@ -15,6 +15,9 @@ final class Input
         $this->data = $data;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function match(string $key) : array
     {
         return self::recursiveMatch(explode('.', $key), $this->data);

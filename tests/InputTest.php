@@ -4,7 +4,7 @@ namespace Yahiru\Validator;
 
 final class InputTest extends TestCase
 {
-    public function testMatch()
+    public function testMatch() : void
     {
         $data = [
             'key1' => 'value',
