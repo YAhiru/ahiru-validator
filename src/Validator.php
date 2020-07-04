@@ -29,7 +29,12 @@ final class Validator
 
                     /** @var RuleInterface $rule */
                     foreach ($rules as $rule) {
-                        if (! $rule->isValid($willValidateValue)) {
+                        $ruleIsValid = $rule instanceof DependsOtherValueInterface
+                            ? $rule->isValid(new ResolvedDependsValue($willValidateValue, $rule->getDependsValue($input)))
+                            : $rule->isValid($willValidateValue)
+                        ;
+
+                        if (! $ruleIsValid) {
                             $errors[$key][] = $rule->getMessage($rules->getAttributeName());
                             $valid = false;
                         }

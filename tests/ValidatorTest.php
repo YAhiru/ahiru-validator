@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Yahiru\Validator;
 
 use Yahiru\Validator\Rule\ArrayMax;
+use Yahiru\Validator\Rule\DateTimeAfter;
 use Yahiru\Validator\Rule\Nullable;
 use Yahiru\Validator\Rule\Regex;
 use Yahiru\Validator\Rule\Required;
@@ -80,6 +81,35 @@ final class ValidatorTest extends TestCase
                 'タグ is invalid format.',
             ],
             $result->getErrors('tags.*')
+        );
+    }
+
+    public function testValidateDependsOtherValueRule() : void
+    {
+        $validator = new Validator();
+
+        $validator->define('start_date', '開始日');
+        $validator
+            ->define('end_date', '終了日')
+            ->add(new DateTimeAfter('start_date'))
+        ;
+
+        $result = $validator->validate([
+            'start_date' => '1970-01-01',
+            'end_date' => '1970-01-02',
+        ]);
+        $this->assertFalse($result->hasErrors());
+
+        $result = $validator->validate([
+            'start_date' => '1970-01-01',
+            'end_date' => '1970-01-01',
+        ]);
+        $this->assertTrue($result->hasErrors());
+        $this->assertSame(
+            [
+                '終了日 must be a date after start_date.'
+            ],
+            $result->getErrors('end_date')
         );
     }
 }
