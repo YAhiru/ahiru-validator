@@ -16,15 +16,12 @@ final class Validator
     {
         $input = new Input($values);
         $errors = [];
-        $validKeys = [];
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $key => $rules) {
             $willValidateValues = $input->match($key);
 
             foreach ($willValidateValues as $willValidateValue) {
-                $valid = true;
-
                 if (! $rules->isNovalidate($willValidateValue)) {
 
                     /** @var RuleInterface $rule */
@@ -36,13 +33,8 @@ final class Validator
 
                         if (! $ruleIsValid) {
                             $errors[$key][] = $rule->getMessage($rules->getAttributeName());
-                            $valid = false;
                         }
                     }
-                }
-
-                if ($valid) {
-                    $validKeys[] = $key;
                 }
             }
         }
