@@ -22,18 +22,18 @@ final class Validator
             $willValidateValues = $input->match($key);
 
             foreach ($willValidateValues as $willValidateValue) {
-                if (! $rules->isNovalidate($willValidateValue)) {
+                if ($rules->isNovalidate($willValidateValue)) {
+                    continue;
+                }
 
-                    /** @var RuleInterface $rule */
-                    foreach ($rules as $rule) {
-                        $ruleIsValid = $rule instanceof DependsOtherValueInterface
-                            ? $rule->isValid(new ResolvedDependsValue($willValidateValue, $rule->getDependsValue($input)))
-                            : $rule->isValid($willValidateValue)
-                        ;
+                /** @var RuleInterface $rule */
+                foreach ($rules as $rule) {
+                    $ruleIsValid = $rule instanceof DependsOtherValueInterface
+                        ? $rule->isValid(new ResolvedDependsValue($willValidateValue, $rule->getDependsValue($input)))
+                        : $rule->isValid($willValidateValue);
 
-                        if (! $ruleIsValid) {
-                            $errors[$key][] = $rule->getMessage($rules->getAttributeName());
-                        }
+                    if (! $ruleIsValid) {
+                        $errors[$key][] = $rule->getMessage($rules->getAttributeName());
                     }
                 }
             }
