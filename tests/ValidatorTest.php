@@ -34,8 +34,6 @@ final class ValidatorTest extends TestCase
 
         $this->assertSame('名前 is required.', $result->getErrors('name')[0]);
         $this->assertSame('overwrite', $result->getErrors('email')[0]);
-
-        $this->assertSame(['profile' => 'hello'], $result->getValidatedValues());
     }
 
     public function testNullable() : void
@@ -51,7 +49,6 @@ final class ValidatorTest extends TestCase
         $result = $validator->validate(['name' => null]);
 
         $this->assertFalse($result->hasErrors());
-        $this->assertSame(['name' => null], $result->getValidatedValues());
     }
 
     public function testValidateArray() : void

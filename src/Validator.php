@@ -47,7 +47,7 @@ final class Validator
             }
         }
 
-        return new Result($values, $errors, $validKeys);
+        return new Result($values, $errors);
     }
 
     public function define(string $attributeKey, string $attributeName) : RuleCollection

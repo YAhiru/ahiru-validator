@@ -16,22 +16,18 @@ final class Result
      * @var string[][]
      */
     private array $errors;
-    /** @var string[] */
-    private array $validKeys;
 
     /**
      * @phpstan-param array<string, mixed> $rawValues
      * @phpstan-param array<string, array<string>> $errors
      *
-     * @param mixed[]  $rawValues
-     * @param array[]  $errors
-     * @param string[] $validKeys
+     * @param mixed[] $rawValues
+     * @param array[] $errors
      */
-    public function __construct(array $rawValues, array $errors, array $validKeys)
+    public function __construct(array $rawValues, array $errors)
     {
         $this->rawValues = $rawValues;
         $this->errors = $errors;
-        $this->validKeys = $validKeys;
     }
 
     public function hasErrors() : bool
@@ -55,20 +51,5 @@ final class Result
     public function getAllErrors() : array
     {
         return $this->errors;
-    }
-
-    /**
-     * @phpstan-return array<string, mixed>
-     *
-     * @return mixed[]
-     */
-    public function getValidatedValues() : array
-    {
-        $validated = [];
-        foreach ($this->validKeys as $key) {
-            $validated[$key] = $this->rawValues[$key] ?? null;
-        }
-
-        return $validated;
     }
 }
