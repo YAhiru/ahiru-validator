@@ -16,37 +16,43 @@ final class Input
     }
 
     /**
-     * @return array<int, mixed>
+     * @return array<int, Matched>
      */
     public function match(string $key) : array
     {
-        return self::recursiveMatch(explode('.', $key), $this->data);
+        return self::recursiveMatch(explode('.', $key), $this->data, []);
     }
 
     /**
      * @param string[] $keys
      * @param mixed    $input
+     * @param string[] $stack
      *
      * @return array<int, mixed>
      */
-    private static function recursiveMatch(array $keys, $input) : array
+    private static function recursiveMatch(array $keys, $input, array $stack) : array
     {
         $key = array_shift($keys);
         if ($key === null) {
-            return [$input];
+            return [new Matched($input, $stack)];
         }
         if (! is_array($input)) {
-            return [null];
+            return [new Matched(null, array_merge($stack, [$key]))];
         }
         if ($key === '*') {
             $result = [];
-            foreach ($input as $item) {
-                $result = array_merge($result, self::recursiveMatch($keys, $item));
+            foreach ($input as $index => $item) {
+                $result = array_merge(
+                    $result,
+                    self::recursiveMatch($keys, $item, array_merge($stack, [(string) $index]))
+                );
             }
 
             return $result;
         }
 
-        return self::recursiveMatch($keys, $input[$key] ?? null);
+        $stack[] = $key;
+
+        return self::recursiveMatch($keys, $input[$key] ?? null, $stack);
     }
 }

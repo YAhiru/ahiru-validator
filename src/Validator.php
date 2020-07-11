@@ -19,9 +19,11 @@ final class Validator
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $key => $rules) {
-            $willValidateValues = $input->match($key);
+            $matches = $input->match($key);
 
-            foreach ($willValidateValues as $willValidateValue) {
+            /** @var Matched $match */
+            foreach ($matches as $match) {
+                $willValidateValue = $match->getValue();
                 if ($rules->isNovalidate($willValidateValue)) {
                     continue;
                 }
