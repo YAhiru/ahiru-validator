@@ -76,7 +76,7 @@ final class RuleCollection implements \IteratorAggregate
     /**
      * @param mixed $value
      */
-    public function isNovalidate($value) : bool
+    public function canSkip($value) : bool
     {
         return $value === null && $this->isNullable();
     }

@@ -24,7 +24,7 @@ final class Validator
             /** @var Matched $match */
             foreach ($matches as $match) {
                 $willValidateValue = $match->getValue();
-                if ($rules->isNovalidate($willValidateValue)) {
+                if ($rules->canSkip($willValidateValue)) {
                     continue;
                 }
 
