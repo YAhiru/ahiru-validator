@@ -79,6 +79,12 @@ final class ValidatorTest extends TestCase
             ],
             $result->getErrors('tags.*')
         );
+        $this->assertSame(
+            [
+                'タグ must be between 1 and 3 characters.',
+            ],
+            $result->getErrors('tags.1')
+        );
     }
 
     public function testValidateDependsOtherValueRule() : void

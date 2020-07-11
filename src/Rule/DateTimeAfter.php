@@ -18,7 +18,7 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 
     public function getDependsValue(Input $input)
     {
-        $target = $input->match($this->keyOrDateTime);
+        $target = $input->match([$this->keyOrDateTime]);
         if (! isset($target[0]) || $target[0]->getValue() === null) {
             return $this->keyOrDateTime;
         }

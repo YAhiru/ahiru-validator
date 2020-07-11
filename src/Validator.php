@@ -18,8 +18,8 @@ final class Validator
         $errors = [];
 
         /** @var RuleCollection $rules */
-        foreach ($this->rules as $key => $rules) {
-            $matches = $input->match($key);
+        foreach ($this->rules as $rules) {
+            $matches = $input->match($rules->getKeys());
 
             /** @var Matched $match */
             foreach ($matches as $match) {
@@ -35,7 +35,7 @@ final class Validator
                         : $rule->isValid($willValidateValue);
 
                     if (! $ruleIsValid) {
-                        $errors[$key][] = $rule->getMessage($rules->getAttributeName());
+                        $errors = self::addError($errors, $match->getKeys(), $rule->getMessage($rules->getAttributeName()));
                     }
                 }
             }
@@ -44,8 +44,28 @@ final class Validator
         return new Result($values, $errors);
     }
 
-    public function define(string $attributeKey, string $attributeName) : RuleCollection
+    public function define($attributeKey, string $attributeName) : RuleCollection
     {
-        return $this->rules[$attributeKey] = new RuleCollection($attributeName);
+        return $this->rules[] = new RuleCollection(explode('.', $attributeKey), $attributeName);
+    }
+
+    /**
+     * @param array<string, ErrorCollection> $errors
+     * @param string[]                       $keys
+     *
+     * @return array<string, mixed>
+     */
+    private static function addError(array $errors, array $keys, string $message) : array
+    {
+        $key = implode('__separate__', $keys);
+        if (! isset($errors[$key])) {
+            $errors[$key] = new ErrorCollection($keys, []);
+        }
+
+        /** @var ErrorCollection $errorCollection */
+        $errorCollection = $errors[$key];
+        $errorCollection->addError($message);
+
+        return $errors;
     }
 }

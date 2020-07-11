@@ -14,11 +14,25 @@ final class RuleCollection implements \IteratorAggregate
      * @phpstan-var RuleInterface[]
      */
     private array $rules = [];
+    /** @var string[] */
+    private array $keys;
     private string $attributeName;
 
-    public function __construct(string $attributeName)
+    /**
+     * @param string[] $keys
+     */
+    public function __construct(array $keys, string $attributeName)
     {
+        $this->keys = $keys;
         $this->attributeName = $attributeName;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getKeys() : array
+    {
+        return $this->keys;
     }
 
     public function getAttributeName() : string

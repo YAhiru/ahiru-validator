@@ -13,7 +13,7 @@ final class Result
     /**
      * @phpstan-var array<string, array<string>>
      *
-     * @var string[][]
+     * @var ErrorCollection[]
      */
     private array $errors;
 
@@ -21,8 +21,8 @@ final class Result
      * @phpstan-param array<string, mixed> $rawValues
      * @phpstan-param array<string, array<string>> $errors
      *
-     * @param mixed[] $rawValues
-     * @param array[] $errors
+     * @param mixed[]           $rawValues
+     * @param ErrorCollection[] $errors
      */
     public function __construct(array $rawValues, array $errors)
     {
@@ -40,7 +40,16 @@ final class Result
      */
     public function getErrors(string $key) : array
     {
-        return $this->errors[$key] ?? [];
+        $keys = explode('.', $key);
+        $errors = [];
+
+        foreach ($this->errors as $error) {
+            if ($error->isMatch($keys)) {
+                $errors = array_merge($errors, $error->getErrors());
+            }
+        }
+
+        return $errors;
     }
 
     /**

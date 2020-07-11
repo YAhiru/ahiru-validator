@@ -16,11 +16,12 @@ final class Input
     }
 
     /**
+     * @param string[] $keys
      * @return array<int, Matched>
      */
-    public function match(string $key) : array
+    public function match(array $keys) : array
     {
-        return self::recursiveMatch(explode('.', $key), $this->data, []);
+        return self::recursiveMatch($keys, $this->data, []);
     }
 
     /**

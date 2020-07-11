@@ -25,16 +25,16 @@ final class InputTest extends TestCase
 
         $input = new Input($data);
 
-        $this->assertMatch([new Matched($data['key1'], ['key1'])], $input->match('key1'));
-        $this->assertMatch([new Matched($data['key2'], ['key2'])], $input->match('key2'));
-        $this->assertMatch([new Matched($data['key2'][0], ['key2', '0'])], $input->match('key2.0'));
-        $this->assertMatch([new Matched($data['key3'][1], ['key3', '1'])], $input->match('key3.1'));
+        $this->assertMatch([new Matched($data['key1'], ['key1'])], $input->match(['key1']));
+        $this->assertMatch([new Matched($data['key2'], ['key2'])], $input->match(['key2']));
+        $this->assertMatch([new Matched($data['key2'][0], ['key2', '0'])], $input->match(['key2', '0']));
+        $this->assertMatch([new Matched($data['key3'][1], ['key3', '1'])], $input->match(['key3', '1']));
         $this->assertMatch(
             [
                 new Matched($data['key3'][0]['name'], ['key3', '0', 'name']),
                 new Matched($data['key3'][1]['name'], ['key3', '1', 'name'])
             ],
-            $input->match('key3.*.name')
+            $input->match(['key3', '*', 'name'])
         );
         $this->assertMatch(
             [
@@ -42,7 +42,7 @@ final class InputTest extends TestCase
                 new Matched($data['key2'][0], ['key2', '0']),
                 new Matched($data['key3'][0], ['key3', '0']),
             ],
-            $input->match('*.0')
+            $input->match(['*', '0'])
         );
         $this->assertMatch(
             [
@@ -50,7 +50,7 @@ final class InputTest extends TestCase
                 new Matched($data['key2'][1], ['key2', '1']),
                 new Matched($data['key2'][2], ['key2', '2']),
             ],
-            $input->match('key2.*')
+            $input->match(['key2', '*'])
         );
         $this->assertMatch(
             [
@@ -61,7 +61,7 @@ final class InputTest extends TestCase
                 new Matched($data['key3'][1]['age'], ['key3', '1', 'age']),
                 new Matched($data['key3'][1]['websites'], ['key3', '1', 'websites']),
             ],
-            $input->match('key3.*.*')
+            $input->match(['key3', '*', '*'])
         );
         $this->assertMatch(
             [
@@ -69,7 +69,7 @@ final class InputTest extends TestCase
                 new Matched($data['key3'][1]['websites'][0], ['key3', '1', 'websites', '0']),
                 new Matched($data['key3'][1]['websites'][1], ['key3', '1', 'websites', '1']),
             ],
-            $input->match('key3.*.websites.*')
+            $input->match(['key3', '*', 'websites', '*'])
         );
         $this->assertMatch(
             [
@@ -80,7 +80,7 @@ final class InputTest extends TestCase
                 new Matched(null, ['key3', '1', 'age', '0']),
                 new Matched($data['key3'][1]['websites'][0], ['key3', '1', 'websites', '0']),
             ],
-            $input->match('key3.*.*.0')
+            $input->match(['key3', '*', '*', '0'])
         );
     }
 
