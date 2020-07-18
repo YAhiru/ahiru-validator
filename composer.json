@@ -11,13 +11,13 @@
     "php": ">=7.4"
   },
   "require-dev": {
-    "phpmd/phpmd": "^2.8",
-    "infection/infection": "^0.16",
     "friendsofphp/php-cs-fixer": "^2.16",
-    "squizlabs/php_codesniffer": "^3.5",
-    "phpunit/phpunit": "^9.0",
+    "infection/infection": "^0.16",
+    "phpmd/phpmd": "^2.8",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-phpunit": "^0.12.6",
+    "phpunit/phpunit": "^9.0",
+    "squizlabs/php_codesniffer": "^3.5",
     "symfony/var-dumper": "^5.1"
   },
   "autoload": {
@@ -49,5 +49,8 @@
       "vendor/bin/phpcbf src tests"
     ],
     "stan": "vendor/bin/phpstan analyse --no-progress"
+  },
+  "config": {
+    "sort-packages": true
   }
 }
