@@ -77,6 +77,8 @@ final class InputTest extends TestCase
             ],
             $input->get(['key3', '*', '*', '0'])
         );
+
+        $this->assertSame([], $input->get(['does not exists']));
     }
 
     public function testGetWithVoid() : void
