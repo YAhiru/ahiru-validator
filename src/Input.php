@@ -19,9 +19,9 @@ final class Input
      * @param string[] $keys
      * @return array<int, Matched>
      */
-    public function match(array $keys) : array
+    public function get(array $keys) : array
     {
-        return self::recursiveMatch($keys, $this->data, []);
+        return self::recursiveGet($keys, $this->data, []);
     }
 
     /**
@@ -31,7 +31,7 @@ final class Input
      *
      * @return array<int, mixed>
      */
-    private static function recursiveMatch(array $keys, $input, array $stack) : array
+    private static function recursiveGet(array $keys, $input, array $stack) : array
     {
         $key = array_shift($keys);
         if ($key === null) {
@@ -45,7 +45,7 @@ final class Input
             foreach ($input as $index => $item) {
                 $result = array_merge(
                     $result,
-                    self::recursiveMatch($keys, $item, array_merge($stack, [(string) $index]))
+                    self::recursiveGet($keys, $item, array_merge($stack, [(string) $index]))
                 );
             }
 
@@ -54,6 +54,6 @@ final class Input
 
         $stack[] = $key;
 
-        return self::recursiveMatch($keys, $input[$key] ?? null, $stack);
+        return self::recursiveGet($keys, $input[$key] ?? null, $stack);
     }
 }
