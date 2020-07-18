@@ -8,6 +8,7 @@ final class Matched
     private $value;
     /** @var string[] */
     private array $keys;
+    private bool $void = false;
 
     /**
      * @param mixed    $value
@@ -27,5 +28,18 @@ final class Matched
     public function getValue()
     {
         return $this->value;
+    }
+
+    public static function void(array $keys): self
+    {
+        $self = new self(null, $keys);
+        $self->void = true;
+
+        return $self;
+    }
+
+    public function isVoid(): bool
+    {
+        return $this->void;
     }
 }

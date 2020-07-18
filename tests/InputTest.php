@@ -38,7 +38,6 @@ final class InputTest extends TestCase
         );
         $this->assertMatch(
             [
-                new Matched(null, ['key1', '0']),
                 new Matched($data['key2'][0], ['key2', '0']),
                 new Matched($data['key3'][0], ['key3', '0']),
             ],
@@ -73,14 +72,29 @@ final class InputTest extends TestCase
         );
         $this->assertMatch(
             [
-                new Matched(null, ['key3', '0', 'name', '0']),
-                new Matched(null, ['key3', '0', 'age', '0']),
                 new Matched($data['key3'][0]['websites'][0], ['key3', '0', 'websites', '0']),
-                new Matched(null, ['key3', '1', 'name', '0']),
-                new Matched(null, ['key3', '1', 'age', '0']),
                 new Matched($data['key3'][1]['websites'][0], ['key3', '1', 'websites', '0']),
             ],
             $input->get(['key3', '*', '*', '0'])
+        );
+    }
+
+    public function testGetWithVoid() : void
+    {
+        $data = [
+            'key1' => 'value',
+            'key2' => [1, 2, 3],
+        ];
+
+        $input = new Input($data);
+
+        $this->assertMatch([Matched::void(['key1', '0'])], $input->getWithVoid(['key1', '0']));
+        $this->assertMatch(
+            [
+                Matched::void(['key1', '0']),
+                new Matched(1, ['key2', '0'])
+            ],
+            $input->getWithVoid(['*', '0'])
         );
     }
 
@@ -92,6 +106,7 @@ final class InputTest extends TestCase
     {
         $this->assertCount(count($expected), $actual);
         foreach ($expected as $idx => $item) {
+            $this->assertSame($item->isVoid(), $actual[$idx]->isVoid());
             $this->assertSame($item->getValue(), $actual[$idx]->getValue());
             $this->assertSame($item->getKeys(), $actual[$idx]->getKeys());
         }

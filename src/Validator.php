@@ -19,7 +19,7 @@ final class Validator
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $rules) {
-            $matches = $input->get($rules->getKeys());
+            $matches = $input->getWithVoid($rules->getKeys());
 
             /** @var Matched $match */
             foreach ($matches as $match) {
