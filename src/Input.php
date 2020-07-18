@@ -65,6 +65,12 @@ final class Input
 
         $stack[] = $key;
 
-        return self::recursiveGet($keys, $input[$key] ?? null, $stack, $withVoid);
+        if (!isset($input[$key])) {
+            return $withVoid
+                ? [Matched::void($stack)]
+                : [];
+        }
+
+        return self::recursiveGet($keys, $input[$key], $stack, $withVoid);
     }
 }
