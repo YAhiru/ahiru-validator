@@ -30,7 +30,7 @@ final class Matched
         return $this->value;
     }
 
-    public static function void(array $keys): self
+    public static function void(array $keys) : self
     {
         $self = new self(null, $keys);
         $self->void = true;
@@ -38,7 +38,7 @@ final class Matched
         return $self;
     }
 
-    public function isVoid(): bool
+    public function isVoid() : bool
     {
         return $this->void;
     }

@@ -17,6 +17,7 @@ final class Input
 
     /**
      * @param string[] $keys
+     *
      * @return array<int, Matched>
      */
     public function get(array $keys) : array
@@ -26,6 +27,7 @@ final class Input
 
     /**
      * @param string[] $keys
+     *
      * @return array<int, Matched>
      */
     public function getWithVoid(array $keys) : array
@@ -65,7 +67,7 @@ final class Input
 
         $stack[] = $key;
 
-        if (!isset($input[$key])) {
+        if (! isset($input[$key])) {
             return $withVoid
                 ? [Matched::void($stack)]
                 : [];
