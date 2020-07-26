@@ -29,7 +29,7 @@ final class OverwriteMessageTest extends TestCase
     public function testIsValid() : void
     {
         $orgRule = new class implements RuleInterface {
-            public function isValid($value) : bool
+            public function isValid(Value $value) : bool
             {
                 return (bool) $value->getValue();
             }
