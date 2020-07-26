@@ -36,8 +36,8 @@ final class DateTimeAfterTest extends TestCase
     {
         $rule = new DateTimeAfter('start_date');
         $this->assertSame(
-            'end_date must be a date after start_date.',
-            $rule->getMessage('end_date')
+            ['after' => 'start_date'],
+            $rule->getReplacements()
         );
     }
 }

@@ -39,9 +39,9 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
         return $first > $second;
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getReplacements() : array
     {
-        return sprintf('%s must be a date after %s.', $attributeName, $this->keyOrDateTime);
+        return ['after' => $this->keyOrDateTime];
     }
 
     private function createDateTime(string $value) : ?\DateTimeImmutable

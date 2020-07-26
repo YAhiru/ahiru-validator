@@ -16,7 +16,7 @@ final class RequiredTest extends TestCase
 
     public function testGetMessage() : void
     {
-        $this->assertSame('foo is required.', $this->rule->getMessage('foo'));
+        $this->assertSame([], $this->rule->getReplacements());
     }
 
     public function testIsValid() : void

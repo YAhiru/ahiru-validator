@@ -31,8 +31,11 @@ final class StringRange implements RuleInterface
         return $this->min <= $strlen && $strlen <= $this->max;
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getReplacements() : array
     {
-        return sprintf('%1$s must be between %2$s and %3$s characters.', $attributeName, $this->min, $this->max);
+        return [
+            'min' => "{$this->min}",
+            'max' => "{$this->max}",
+        ];
     }
 }

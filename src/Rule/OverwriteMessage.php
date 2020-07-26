@@ -30,10 +30,13 @@ final class OverwriteMessage implements RuleInterface, DependsOtherValueInterfac
         return $this->rule->isValid($value);
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getMessage() : string
     {
-        unset($attributeName);
-
         return $this->message;
+    }
+
+    public function getReplacements() : array
+    {
+        return $this->rule->getReplacements();
     }
 }

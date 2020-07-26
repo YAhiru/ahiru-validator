@@ -21,8 +21,8 @@ final class ArrayMax implements RuleInterface
         return is_array($value) && count($value) <= $this->max;
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getReplacements() : array
     {
-        return sprintf('size of %1$s must be smaller than %2$s.', $attributeName, $this->max);
+        return ['max' => "{$this->max}"];
     }
 }

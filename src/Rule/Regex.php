@@ -24,8 +24,8 @@ final class Regex implements RuleInterface
         return preg_match($this->regex, (string) $value) === 1;
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getReplacements() : array
     {
-        return sprintf('%1$s is invalid format.', $attributeName);
+        return [];
     }
 }
