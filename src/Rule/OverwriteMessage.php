@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\RuleInterface;
+use Yahiru\Validator\Value;
 
 final class OverwriteMessage implements RuleInterface
 {
@@ -15,7 +16,7 @@ final class OverwriteMessage implements RuleInterface
         $this->message = $message;
     }
 
-    public function isValid($value) : bool
+    public function isValid(Value $value) : bool
     {
         return $this->rule->isValid($value);
     }

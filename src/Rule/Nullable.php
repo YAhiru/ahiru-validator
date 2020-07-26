@@ -3,10 +3,11 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\RuleInterface;
+use Yahiru\Validator\Value;
 
 final class Nullable implements RuleInterface
 {
-    public function isValid($value) : bool
+    public function isValid(Value $value) : bool
     {
         unset($value);
 

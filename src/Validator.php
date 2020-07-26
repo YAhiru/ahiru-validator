@@ -32,7 +32,7 @@ final class Validator
                 foreach ($rules as $rule) {
                     $ruleIsValid = $rule instanceof DependsOtherValueInterface
                         ? $rule->isValid(new Value($willValidateValue, $rule->getDependsValue($input)))
-                        : $rule->isValid($willValidateValue);
+                        : $rule->isValid(new Value($willValidateValue));
 
                     if (! $ruleIsValid) {
                         $errors = self::addError($errors, $match->getKeys(), $rule->getMessage($rules->getAttributeName()));

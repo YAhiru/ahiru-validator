@@ -4,15 +4,16 @@ namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\RuleInterface;
 use Yahiru\Validator\TestCase;
+use Yahiru\Validator\Value;
 
 final class OverwriteMessageTest extends TestCase
 {
     public function testGetMessage() : void
     {
         $orgRule = new class implements RuleInterface {
-            public function isValid($value) : bool
+            public function isValid(Value $value) : bool
             {
-                return (bool) $value;
+                return (bool) $value->getValue();
             }
 
             public function getMessage(string $attributeName) : string
@@ -30,7 +31,7 @@ final class OverwriteMessageTest extends TestCase
         $orgRule = new class implements RuleInterface {
             public function isValid($value) : bool
             {
-                return (bool) $value;
+                return (bool) $value->getValue();
             }
 
             public function getMessage(string $attributeName) : string
@@ -40,7 +41,7 @@ final class OverwriteMessageTest extends TestCase
         };
         $rule = new OverwriteMessage($orgRule, 'overwrite');
 
-        $this->assertTrue($rule->isValid('foo'));
-        $this->assertFalse($rule->isValid(null));
+        $this->assertTrue($rule->isValid(new Value('foo')));
+        $this->assertFalse($rule->isValid(new Value(null)));
     }
 }

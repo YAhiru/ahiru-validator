@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\TestCase;
+use Yahiru\Validator\Value;
 
 final class ArrayMaxTest extends TestCase
 {
@@ -20,9 +21,9 @@ final class ArrayMaxTest extends TestCase
 
     public function testIsValid() : void
     {
-        $this->assertTrue($this->rule->isValid(['foo', 'bar', 'baz']));
-        $this->assertTrue($this->rule->isValid([]));
-        $this->assertFalse($this->rule->isValid(null));
-        $this->assertFalse($this->rule->isValid(''));
+        $this->assertTrue($this->rule->isValid(new Value(['foo', 'bar', 'baz'])));
+        $this->assertTrue($this->rule->isValid(new Value([])));
+        $this->assertFalse($this->rule->isValid(new Value(null)));
+        $this->assertFalse($this->rule->isValid(new Value('')));
     }
 }

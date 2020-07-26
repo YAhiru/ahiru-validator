@@ -13,7 +13,7 @@ final class Value
      * @param mixed $value
      * @param mixed $depends
      */
-    public function __construct($value, $depends)
+    public function __construct($value, $depends = null)
     {
         $this->value = $value;
         $this->depends = $depends;

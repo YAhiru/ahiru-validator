@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\TestCase;
+use Yahiru\Validator\Value;
 
 final class RequiredTest extends TestCase
 {
@@ -20,8 +21,8 @@ final class RequiredTest extends TestCase
 
     public function testIsValid() : void
     {
-        $this->assertTrue($this->rule->isValid('foo'));
-        $this->assertFalse($this->rule->isValid(null));
-        $this->assertFalse($this->rule->isValid(''));
+        $this->assertTrue($this->rule->isValid(new Value('foo')));
+        $this->assertFalse($this->rule->isValid(new Value(null)));
+        $this->assertFalse($this->rule->isValid(new Value('')));
     }
 }

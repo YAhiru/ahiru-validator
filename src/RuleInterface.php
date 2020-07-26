@@ -4,10 +4,7 @@ namespace Yahiru\Validator;
 
 interface RuleInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public function isValid($value) : bool;
+    public function isValid(Value $value) : bool;
 
     public function getMessage(string $attributeName) : string;
 }

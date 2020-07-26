@@ -3,8 +3,8 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\Input;
-use Yahiru\Validator\Value;
 use Yahiru\Validator\TestCase;
+use Yahiru\Validator\Value;
 
 final class DateTimeAfterTest extends TestCase
 {
