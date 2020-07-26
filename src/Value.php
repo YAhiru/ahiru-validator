@@ -34,4 +34,12 @@ final class Value
     {
         return $this->depends;
     }
+
+    /**
+     * @param mixed $value
+     */
+    public function setDepends($value) : void
+    {
+        $this->depends = $value;
+    }
 }

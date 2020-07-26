@@ -30,9 +30,13 @@ final class Validator
 
                 /** @var RuleInterface $rule */
                 foreach ($rules as $rule) {
-                    $ruleIsValid = $rule instanceof DependsOtherValueInterface
-                        ? $rule->isValid(new Value($willValidateValue, $rule->getDependsValue($input)))
-                        : $rule->isValid(new Value($willValidateValue));
+                    $value = new Value($willValidateValue);
+
+                    if ($rule instanceof DependsOtherValueInterface) {
+                        $value->setDepends($rule->getDependsValue($input));
+                    }
+
+                    $ruleIsValid = $rule->isValid($value);
 
                     if (! $ruleIsValid) {
                         $errors = self::addError($errors, $match->getKeys(), $rule->getMessage($rules->getAttributeName()));
