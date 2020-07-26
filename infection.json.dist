@@ -24,6 +24,6 @@
     }
   },
   "testFramework":"phpunit",
-  "initialTestsPhpOptions": "-d pcov.directory=./ -d pcov.exclude=./tests",
+  "initialTestsPhpOptions": "-d pcov.directory=. -d pcov.exclude=\"~(tests)~\"",
   "testFrameworkOptions": "-vvv"
 }

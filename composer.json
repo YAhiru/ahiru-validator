@@ -39,7 +39,7 @@
       "@stan",
       "@test"
     ],
-    "coverage": ["php -d pcov.directory=./ -d pcov.exclude=./tests ./vendor/bin/phpunit --coverage-html=build/coverage"],
+    "coverage": ["php -d pcov.directory=. -d pcov.exclude=\"~(tests)~\" ./vendor/bin/phpunit --coverage-html=build/coverage"],
     "cs": [
       "vendor/bin/php-cs-fixer fix -v --dry-run",
       "vendor/bin/phpcs --standard=phpcs.xml src;"
