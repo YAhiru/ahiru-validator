@@ -11,15 +11,12 @@ final class Result
      */
     private array $rawValues;
     /**
-     * @phpstan-var array<string, array<string>>
-     *
      * @var ErrorCollection[]
      */
     private array $errors;
 
     /**
      * @phpstan-param array<string, mixed> $rawValues
-     * @phpstan-param array<string, array<string>> $errors
      *
      * @param mixed[]           $rawValues
      * @param ErrorCollection[] $errors
@@ -36,13 +33,20 @@ final class Result
     }
 
     /**
+     * @param string|string[] $key
+     *
      * @return string[]
      */
-    public function getErrors(string $key) : array
+    public function getErrors($key) : array
     {
-        $keys = explode('.', $key);
+        $keys = is_array($key)
+            ? $key
+            : explode('.', $key)
+        ;
+
         $errors = [];
 
+        /** @var ErrorCollection $error */
         foreach ($this->errors as $error) {
             if ($error->isMatch($keys)) {
                 $errors = array_merge($errors, $error->getErrors());
@@ -59,6 +63,11 @@ final class Result
      */
     public function getAllErrors() : array
     {
-        return $this->errors;
+        $errors = [];
+        foreach ($this->errors as $error) {
+            $errors[implode('.', $error->getKeys())] = $error->getErrors();
+        }
+
+        return $errors;
     }
 }

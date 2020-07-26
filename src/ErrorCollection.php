@@ -48,6 +48,7 @@ final class ErrorCollection
         if (count($keys) !== count($this->keys)) {
             return false;
         }
+
         foreach ($keys as $idx => $first) {
             $second = $this->keys[$idx] ?? null;
             if ($second === null || ($first !== $second && $first !== '*')) {

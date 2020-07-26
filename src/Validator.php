@@ -4,7 +4,7 @@ namespace Yahiru\Validator;
 
 final class Validator
 {
-    /** @var array<string, RuleCollection> */
+    /** @var array<int, RuleCollection> */
     private array $rules;
 
     /**
@@ -44,7 +44,7 @@ final class Validator
         return new Result($values, $errors);
     }
 
-    public function define($attributeKey, string $attributeName) : RuleCollection
+    public function define(string $attributeKey, string $attributeName) : RuleCollection
     {
         return $this->rules[] = new RuleCollection(explode('.', $attributeKey), $attributeName);
     }

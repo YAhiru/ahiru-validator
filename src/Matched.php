@@ -20,16 +20,25 @@ final class Matched
         $this->keys = $keys;
     }
 
+    /**
+     * @return string[]
+     */
     public function getKeys() : array
     {
         return $this->keys;
     }
 
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * @param string[] $keys
+     */
     public static function void(array $keys) : self
     {
         $self = new self(null, $keys);
