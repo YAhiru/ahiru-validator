@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\Input;
-use Yahiru\Validator\ResolvedDependsValue;
+use Yahiru\Validator\Value;
 use Yahiru\Validator\TestCase;
 
 final class DateTimeAfterTest extends TestCase
@@ -11,10 +11,10 @@ final class DateTimeAfterTest extends TestCase
     public function testValidate() : void
     {
         $rule = new DateTimeAfter('');
-        $this->assertFalse($rule->isValid(new ResolvedDependsValue('1970-01-01', '1970-01-01')));
-        $this->assertTrue($rule->isValid(new ResolvedDependsValue('1970-01-02', '1970-01-01')));
-        $this->assertTrue($rule->isValid(new ResolvedDependsValue('1970-01-01 00:00:01', '1970-01-01')));
-        $this->assertTrue($rule->isValid(new ResolvedDependsValue('tomorrow', 'today')));
+        $this->assertFalse($rule->isValid(new Value('1970-01-01', '1970-01-01')));
+        $this->assertTrue($rule->isValid(new Value('1970-01-02', '1970-01-01')));
+        $this->assertTrue($rule->isValid(new Value('1970-01-01 00:00:01', '1970-01-01')));
+        $this->assertTrue($rule->isValid(new Value('tomorrow', 'today')));
     }
 
     public function testGetDependsValue() : void

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace Yahiru\Validator;
 
-final class ResolvedDependsValue
+final class Value
 {
     /** @var mixed */
     private $value;

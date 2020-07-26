@@ -4,7 +4,7 @@ namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\DependsOtherValueInterface;
 use Yahiru\Validator\Input;
-use Yahiru\Validator\ResolvedDependsValue;
+use Yahiru\Validator\Value;
 use Yahiru\Validator\RuleInterface;
 
 final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
@@ -28,7 +28,7 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 
     public function isValid($value) : bool
     {
-        assert($value instanceof ResolvedDependsValue);
+        assert($value instanceof Value);
         if (! is_string($first = $value->getValue())
             || ! is_string($second = $value->getDepends())
             || ! ($first = $this->createDateTime($first))
