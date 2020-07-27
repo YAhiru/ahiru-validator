@@ -14,7 +14,10 @@ final class MessageBuilder
         $this->repository = $repository;
     }
 
-    public function build(string $attribute, RuleInterface $rule) : string
+    /**
+     * @param array<string, string> $aliases
+     */
+    public function build(string $attribute, RuleInterface $rule, array $aliases) : string
     {
         if ($rule instanceof OverwriteMessage) {
             return $rule->getMessage();
@@ -29,6 +32,7 @@ final class MessageBuilder
         /** @var array<string, string> $replacements */
         $replacements = array_merge(['attribute' => $attribute], $rule->getReplacements());
         foreach ($replacements as $key => $replacement) {
+            $replacement = $aliases[$replacement] ?? $replacement;
             $template = str_replace(":${key}", $replacement, $template);
         }
 

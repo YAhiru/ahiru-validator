@@ -10,6 +10,9 @@ final class Validator
     private array $rules;
     private MessageBuilder $builder;
 
+    /** @var array<string, string> */
+    private array $aliases = [];
+
     public function __construct()
     {
         $this->builder = new MessageBuilder(new EnglishMessageRepository());
@@ -50,7 +53,7 @@ final class Validator
                         $errors = self::addError(
                             $errors,
                             $match->getKeys(),
-                            $this->builder->build($rules->getAttributeName(), $rule)
+                            $this->builder->build($rules->getAttributeName(), $rule, $this->aliases)
                         );
                     }
                 }
@@ -62,6 +65,8 @@ final class Validator
 
     public function define(string $attributeKey, string $attributeName) : RuleCollection
     {
+        $this->aliases[$attributeKey] = $attributeName;
+
         return $this->rules[] = new RuleCollection(explode('.', $attributeKey), $attributeName);
     }
 
