@@ -14,7 +14,7 @@ final class Required implements RuleInterface
         return $value !== null && $value !== '';
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return [];
     }

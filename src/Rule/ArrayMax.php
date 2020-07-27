@@ -21,7 +21,7 @@ final class ArrayMax implements RuleInterface
         return is_array($value) && count($value) <= $this->max;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return ['max' => "{$this->max}"];
     }

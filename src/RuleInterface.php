@@ -9,5 +9,5 @@ interface RuleInterface
     /**
      * @return array<string, string>
      */
-    public function getReplacements() : array;
+    public function getAttributes() : array;
 }

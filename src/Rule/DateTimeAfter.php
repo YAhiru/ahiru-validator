@@ -39,7 +39,7 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
         return $first > $second;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return ['after' => $this->keyOrDateTime];
     }

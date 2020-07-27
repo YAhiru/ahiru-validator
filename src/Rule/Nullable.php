@@ -14,7 +14,7 @@ final class Nullable implements RuleInterface
         return true;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return [];
     }

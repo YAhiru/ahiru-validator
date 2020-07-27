@@ -16,14 +16,14 @@ final class OverwriteMessageTest extends TestCase
                 return (bool) $value->getValue();
             }
 
-            public function getReplacements() : array
+            public function getAttributes() : array
             {
                 return [];
             }
         };
         $rule = new OverwriteMessage($orgRule, 'overwrite');
 
-        $this->assertSame([], $rule->getReplacements());
+        $this->assertSame([], $rule->getAttributes());
     }
 
     public function testIsValid() : void

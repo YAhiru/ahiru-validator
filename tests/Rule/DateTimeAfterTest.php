@@ -37,7 +37,7 @@ final class DateTimeAfterTest extends TestCase
         $rule = new DateTimeAfter('start_date');
         $this->assertSame(
             ['after' => 'start_date'],
-            $rule->getReplacements()
+            $rule->getAttributes()
         );
     }
 }

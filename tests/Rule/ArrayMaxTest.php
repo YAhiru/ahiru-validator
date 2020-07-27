@@ -16,7 +16,7 @@ final class ArrayMaxTest extends TestCase
 
     public function testGetMessage() : void
     {
-        $this->assertSame(['max' => '3'], $this->rule->getReplacements());
+        $this->assertSame(['max' => '3'], $this->rule->getAttributes());
     }
 
     public function testIsValid() : void

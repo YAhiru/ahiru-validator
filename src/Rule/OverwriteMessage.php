@@ -35,8 +35,8 @@ final class OverwriteMessage implements RuleInterface, DependsOtherValueInterfac
         return $this->message;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
-        return $this->rule->getReplacements();
+        return $this->rule->getAttributes();
     }
 }

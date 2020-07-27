@@ -30,7 +30,7 @@ final class MessageBuilder
         }
 
         /** @var array<string, string> $replacements */
-        $replacements = array_merge(['attribute' => $attribute], $rule->getReplacements());
+        $replacements = array_merge(['attribute' => $attribute], $rule->getAttributes());
         foreach ($replacements as $key => $replacement) {
             $replacement = $aliases[$replacement] ?? $replacement;
             $template = str_replace(":${key}", $replacement, $template);

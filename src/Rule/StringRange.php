@@ -31,7 +31,7 @@ final class StringRange implements RuleInterface
         return $this->min <= $strlen && $strlen <= $this->max;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return [
             'min' => "{$this->min}",

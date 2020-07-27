@@ -24,7 +24,7 @@ final class Regex implements RuleInterface
         return preg_match($this->regex, (string) $value) === 1;
     }
 
-    public function getReplacements() : array
+    public function getAttributes() : array
     {
         return [];
     }
