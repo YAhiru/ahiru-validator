@@ -53,7 +53,7 @@ final class Validator
                         $errors = self::addError(
                             $errors,
                             $match->getKeys(),
-                            $this->builder->build($rules->getAttributeName(), $rule, $this->aliases)
+                            $this->builder->build($this->aliases, $rules->getAttributeName(), $rule)
                         );
                     }
                 }

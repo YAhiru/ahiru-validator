@@ -17,7 +17,7 @@ final class MessageBuilder
     /**
      * @param array<string, string> $aliases
      */
-    public function build(string $attribute, RuleInterface $rule, array $aliases) : string
+    public function build(array $aliases, string $attribute, RuleInterface $rule) : string
     {
         if ($rule instanceof OverwriteMessage) {
             return $rule->getMessage();
