@@ -6,5 +6,8 @@ interface RuleInterface
 {
     public function isValid(Value $value) : bool;
 
-    public function getMessage(string $attributeName) : string;
+    /**
+     * @return array<string, string>
+     */
+    public function getAttributes() : array;
 }

@@ -14,10 +14,8 @@ final class Nullable implements RuleInterface
         return true;
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getAttributes() : array
     {
-        unset($attributeName);
-
-        return '';
+        return [];
     }
 }

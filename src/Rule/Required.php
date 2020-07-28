@@ -14,8 +14,8 @@ final class Required implements RuleInterface
         return $value !== null && $value !== '';
     }
 
-    public function getMessage(string $attributeName) : string
+    public function getAttributes() : array
     {
-        return sprintf('%1$s is required.', $attributeName);
+        return [];
     }
 }

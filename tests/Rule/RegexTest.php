@@ -16,7 +16,7 @@ final class RegexTest extends TestCase
 
     public function testGetMessage() : void
     {
-        $this->assertSame('foo is invalid format.', $this->rule->getMessage('foo'));
+        $this->assertSame([], $this->rule->getAttributes());
     }
 
     public function testIsValid() : void

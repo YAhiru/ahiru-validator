@@ -110,7 +110,7 @@ final class ValidatorTest extends TestCase
         $this->assertTrue($result->hasErrors());
         $this->assertSame(
             [
-                '終了日 must be a date after start_date.'
+                '終了日 must be a date after 開始日.'
             ],
             $result->getErrors(new Keys('end_date'))
         );
