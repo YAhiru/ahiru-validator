@@ -12,7 +12,7 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 {
     private string $keyOrDateTime;
 
-    public function __construct($keyOrDateTime)
+    public function __construct(string $keyOrDateTime)
     {
         $this->keyOrDateTime = $keyOrDateTime;
     }

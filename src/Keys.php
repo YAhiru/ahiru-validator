@@ -20,7 +20,7 @@ final class Keys
         return implode($delimiter, $this->keys);
     }
 
-    public static function create(string $keys)
+    public static function create(string $keys) : self
     {
         return new self(...explode(self::DELIMITER, $keys));
     }
@@ -30,6 +30,9 @@ final class Keys
         return $this->implode(self::DELIMITER);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function toArray() : array
     {
         return $this->keys;
