@@ -6,24 +6,19 @@ final class Matched
 {
     /** @var mixed */
     private $value;
-    /** @var string[] */
-    private array $keys;
+    private Keys $keys;
     private bool $void = false;
 
     /**
-     * @param mixed    $value
-     * @param string[] $keys
+     * @param mixed $value
      */
-    public function __construct($value, array $keys)
+    public function __construct($value, Keys $keys)
     {
         $this->value = $value;
         $this->keys = $keys;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getKeys() : array
+    public function getKeys() : Keys
     {
         return $this->keys;
     }
@@ -36,10 +31,7 @@ final class Matched
         return $this->value;
     }
 
-    /**
-     * @param string[] $keys
-     */
-    public static function void(array $keys) : self
+    public static function void(Keys $keys) : self
     {
         $self = new self(null, $keys);
         $self->void = true;

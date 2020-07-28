@@ -48,22 +48,21 @@ final class Validator
         return new Result($values, $errors);
     }
 
-    public function define(string $attributeKey, string $attributeName) : RuleCollection
+    public function define(Keys $attributeKey, string $attributeName) : RuleCollection
     {
-        return $this->rules[] = new RuleCollection(explode('.', $attributeKey), $attributeName);
+        return $this->rules[] = new RuleCollection($attributeKey, $attributeName);
     }
 
     /**
      * @param array<string, ErrorCollection> $errors
-     * @param string[]                       $keys
      *
      * @return array<string, mixed>
      */
-    private static function addError(array $errors, array $keys, string $message) : array
+    private static function addError(array $errors, Keys $keys, string $message) : array
     {
-        $key = implode('__separate__', $keys);
+        $key = $keys->implode('__separate__');
         if (! isset($errors[$key])) {
-            $errors[$key] = new ErrorCollection($keys, []);
+            $errors[$key] = new ErrorCollection([], $keys);
         }
 
         /** @var ErrorCollection $errorCollection */

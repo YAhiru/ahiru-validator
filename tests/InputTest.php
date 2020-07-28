@@ -25,60 +25,60 @@ final class InputTest extends TestCase
 
         $input = new Input($data);
 
-        $this->assertMatch([new Matched($data['key1'], ['key1'])], $input->get(['key1']));
-        $this->assertMatch([new Matched($data['key2'], ['key2'])], $input->get(['key2']));
-        $this->assertMatch([new Matched($data['key2'][0], ['key2', '0'])], $input->get(['key2', '0']));
-        $this->assertMatch([new Matched($data['key3'][1], ['key3', '1'])], $input->get(['key3', '1']));
+        $this->assertMatch([new Matched($data['key1'], new Keys('key1'))], $input->get(new Keys('key1')));
+        $this->assertMatch([new Matched($data['key2'], new Keys('key2'))], $input->get(new Keys('key2')));
+        $this->assertMatch([new Matched($data['key2'][0], new Keys('key2', '0'))], $input->get(new Keys('key2', '0')));
+        $this->assertMatch([new Matched($data['key3'][1], new Keys('key3', '1'))], $input->get(new Keys('key3', '1')));
         $this->assertMatch(
             [
-                new Matched($data['key3'][0]['name'], ['key3', '0', 'name']),
-                new Matched($data['key3'][1]['name'], ['key3', '1', 'name'])
+                new Matched($data['key3'][0]['name'], new Keys('key3', '0', 'name')),
+                new Matched($data['key3'][1]['name'], new Keys('key3', '1', 'name'))
             ],
-            $input->get(['key3', '*', 'name'])
+            $input->get(new Keys('key3', '*', 'name'))
         );
         $this->assertMatch(
             [
-                new Matched($data['key2'][0], ['key2', '0']),
-                new Matched($data['key3'][0], ['key3', '0']),
+                new Matched($data['key2'][0], new Keys('key2', '0')),
+                new Matched($data['key3'][0], new Keys('key3', '0')),
             ],
-            $input->get(['*', '0'])
+            $input->get(new Keys('*', '0'))
         );
         $this->assertMatch(
             [
-                new Matched($data['key2'][0], ['key2', '0']),
-                new Matched($data['key2'][1], ['key2', '1']),
-                new Matched($data['key2'][2], ['key2', '2']),
+                new Matched($data['key2'][0], new Keys('key2', '0')),
+                new Matched($data['key2'][1], new Keys('key2', '1')),
+                new Matched($data['key2'][2], new Keys('key2', '2')),
             ],
-            $input->get(['key2', '*'])
+            $input->get(new Keys('key2', '*'))
         );
         $this->assertMatch(
             [
-                new Matched($data['key3'][0]['name'], ['key3', '0', 'name']),
-                new Matched($data['key3'][0]['age'], ['key3', '0', 'age']),
-                new Matched($data['key3'][0]['websites'], ['key3', '0', 'websites']),
-                new Matched($data['key3'][1]['name'], ['key3', '1', 'name']),
-                new Matched($data['key3'][1]['age'], ['key3', '1', 'age']),
-                new Matched($data['key3'][1]['websites'], ['key3', '1', 'websites']),
+                new Matched($data['key3'][0]['name'], new Keys('key3', '0', 'name')),
+                new Matched($data['key3'][0]['age'], new Keys('key3', '0', 'age')),
+                new Matched($data['key3'][0]['websites'], new Keys('key3', '0', 'websites')),
+                new Matched($data['key3'][1]['name'], new Keys('key3', '1', 'name')),
+                new Matched($data['key3'][1]['age'], new Keys('key3', '1', 'age')),
+                new Matched($data['key3'][1]['websites'], new Keys('key3', '1', 'websites')),
             ],
-            $input->get(['key3', '*', '*'])
+            $input->get(new Keys('key3', '*', '*'))
         );
         $this->assertMatch(
             [
-                new Matched($data['key3'][0]['websites'][0], ['key3', '0', 'websites', '0']),
-                new Matched($data['key3'][1]['websites'][0], ['key3', '1', 'websites', '0']),
-                new Matched($data['key3'][1]['websites'][1], ['key3', '1', 'websites', '1']),
+                new Matched($data['key3'][0]['websites'][0], new Keys('key3', '0', 'websites', '0')),
+                new Matched($data['key3'][1]['websites'][0], new Keys('key3', '1', 'websites', '0')),
+                new Matched($data['key3'][1]['websites'][1], new Keys('key3', '1', 'websites', '1')),
             ],
-            $input->get(['key3', '*', 'websites', '*'])
+            $input->get(new Keys('key3', '*', 'websites', '*'))
         );
         $this->assertMatch(
             [
-                new Matched($data['key3'][0]['websites'][0], ['key3', '0', 'websites', '0']),
-                new Matched($data['key3'][1]['websites'][0], ['key3', '1', 'websites', '0']),
+                new Matched($data['key3'][0]['websites'][0], new Keys('key3', '0', 'websites', '0')),
+                new Matched($data['key3'][1]['websites'][0], new Keys('key3', '1', 'websites', '0')),
             ],
-            $input->get(['key3', '*', '*', '0'])
+            $input->get(new Keys('key3', '*', '*', '0'))
         );
 
-        $this->assertSame([], $input->get(['does not exists']));
+        $this->assertSame([], $input->get(new Keys('does not exists')));
     }
 
     public function testGetWithVoid() : void
@@ -90,13 +90,13 @@ final class InputTest extends TestCase
 
         $input = new Input($data);
 
-        $this->assertMatch([Matched::void(['key1', '0'])], $input->getWithVoid(['key1', '0']));
+        $this->assertMatch([Matched::void(new Keys('key1', '0'))], $input->getWithVoid(new Keys('key1', '0')));
         $this->assertMatch(
             [
-                Matched::void(['key1', '0']),
-                new Matched(1, ['key2', '0'])
+                Matched::void(new Keys('key1', '0')),
+                new Matched(1, new Keys('key2', '0'))
             ],
-            $input->getWithVoid(['*', '0'])
+            $input->getWithVoid(new Keys('*', '0'))
         );
     }
 
@@ -110,7 +110,7 @@ final class InputTest extends TestCase
         foreach ($expected as $idx => $item) {
             $this->assertSame($item->isVoid(), $actual[$idx]->isVoid());
             $this->assertSame($item->getValue(), $actual[$idx]->getValue());
-            $this->assertSame($item->getKeys(), $actual[$idx]->getKeys());
+            $this->assertSame($item->getKeys()->toArray(), $actual[$idx]->getKeys()->toArray());
         }
     }
 }

@@ -16,23 +16,19 @@ final class Input
     }
 
     /**
-     * @param string[] $keys
-     *
      * @return array<int, Matched>
      */
-    public function get(array $keys) : array
+    public function get(Keys $keys) : array
     {
-        return self::recursiveGet($keys, $this->data, [], false);
+        return self::recursiveGet($keys->toArray(), $this->data, [], false);
     }
 
     /**
-     * @param string[] $keys
-     *
      * @return array<int, Matched>
      */
-    public function getWithVoid(array $keys) : array
+    public function getWithVoid(Keys $keys) : array
     {
-        return self::recursiveGet($keys, $this->data, [], true);
+        return self::recursiveGet($keys->toArray(), $this->data, [], true);
     }
 
     /**
@@ -46,11 +42,11 @@ final class Input
     {
         $key = array_shift($keys);
         if ($key === null) {
-            return [new Matched($input, $stack)];
+            return [new Matched($input, new Keys(...$stack))];
         }
         if (! is_array($input)) {
             return $withVoid
-                ? [Matched::void(array_merge($stack, [$key]))]
+                ? [Matched::void(new Keys(...array_merge($stack, [$key])))]
                 : [];
         }
         if ($key === '*') {
@@ -69,7 +65,7 @@ final class Input
 
         if (! isset($input[$key])) {
             return $withVoid
-                ? [Matched::void($stack)]
+                ? [Matched::void(new Keys(...$stack))]
                 : [];
         }
 

@@ -15,15 +15,15 @@ final class ValidatorTest extends TestCase
     {
         $validator = new Validator();
         $validator
-            ->define('name', '名前')
+            ->define(new Keys('name'), '名前')
             ->add(new Required())
         ;
         $validator
-            ->define('email', 'メールアドレス')
+            ->define(new Keys('email'), 'メールアドレス')
             ->add(new Required(), 'overwrite')
         ;
         $validator
-            ->define('profile', 'プロフィール')
+            ->define(new Keys('profile'), 'プロフィール')
             ->add(new Required())
         ;
 
@@ -32,8 +32,8 @@ final class ValidatorTest extends TestCase
         $this->assertTrue($result->hasErrors());
         $this->assertCount(2, $result->getAllErrors());
 
-        $this->assertSame('名前 is required.', $result->getErrors('name')[0]);
-        $this->assertSame('overwrite', $result->getErrors('email')[0]);
+        $this->assertSame('名前 is required.', $result->getErrors(new Keys('name'))[0]);
+        $this->assertSame('overwrite', $result->getErrors(new Keys('email'))[0]);
     }
 
     public function testNullable() : void
@@ -41,7 +41,7 @@ final class ValidatorTest extends TestCase
         $validator = new Validator();
 
         $validator
-            ->define('name', '名前')
+            ->define(new Keys('name'), '名前')
             ->add(new Nullable())
             ->add(new StringRange(10, 100))
         ;
@@ -55,10 +55,10 @@ final class ValidatorTest extends TestCase
     {
         $validator = new Validator();
         $validator
-            ->define('tags', 'タグ')
+            ->define(new Keys('tags'), 'タグ')
             ->add(new ArrayMax(3))
         ;
-        $validator->define('tags.*', 'タグ')
+        $validator->define(new Keys('tags', '*'), 'タグ')
             ->add(new Regex('/\A[a-z]+\z/'))
             ->add(new StringRange(1, 3))
         ;
@@ -70,20 +70,20 @@ final class ValidatorTest extends TestCase
             [
                 'size of タグ must be smaller than 3.',
             ],
-            $result->getErrors('tags')
+            $result->getErrors(new Keys('tags'))
         );
         $this->assertSame(
             [
                 'タグ must be between 1 and 3 characters.',
                 'タグ is invalid format.',
             ],
-            $result->getErrors('tags.*')
+            $result->getErrors(Keys::create('tags.*'))
         );
         $this->assertSame(
             [
                 'タグ must be between 1 and 3 characters.',
             ],
-            $result->getErrors('tags.1')
+            $result->getErrors(Keys::create('tags.1'))
         );
     }
 
@@ -91,9 +91,9 @@ final class ValidatorTest extends TestCase
     {
         $validator = new Validator();
 
-        $validator->define('start_date', '開始日');
+        $validator->define(new Keys('start_date'), '開始日');
         $validator
-            ->define('end_date', '終了日')
+            ->define(new Keys('end_date'), '終了日')
             ->add(new DateTimeAfter('start_date'))
         ;
 
@@ -112,7 +112,7 @@ final class ValidatorTest extends TestCase
             [
                 '終了日 must be a date after start_date.'
             ],
-            $result->getErrors('end_date')
+            $result->getErrors(new Keys('end_date'))
         );
     }
 }

@@ -4,25 +4,20 @@ namespace Yahiru\Validator;
 
 final class ErrorCollection
 {
-    /** @var string[] */
-    private array $keys;
+    private Keys $keys;
     /** @var string[] */
     private array $errors;
 
     /**
-     * @param string[] $keys
      * @param string[] $errors
      */
-    public function __construct($keys, $errors)
+    public function __construct($errors, Keys $keys)
     {
-        $this->keys = $keys;
         $this->errors = $errors;
+        $this->keys = $keys;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getKeys() : array
+    public function getKeys() : Keys
     {
         return $this->keys;
     }
@@ -38,24 +33,5 @@ final class ErrorCollection
     public function addError(string $message) : void
     {
         $this->errors[] = $message;
-    }
-
-    /**
-     * @param string[] $keys
-     */
-    public function isMatch(array $keys) : bool
-    {
-        if (count($keys) !== count($this->keys)) {
-            return false;
-        }
-
-        foreach ($keys as $idx => $first) {
-            $second = $this->keys[$idx] ?? null;
-            if ($second === null || ($first !== $second && $first !== '*')) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

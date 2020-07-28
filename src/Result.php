@@ -33,22 +33,15 @@ final class Result
     }
 
     /**
-     * @param string|string[] $key
-     *
      * @return string[]
      */
-    public function getErrors($key) : array
+    public function getErrors(Keys $keys) : array
     {
-        $keys = is_array($key)
-            ? $key
-            : explode('.', $key)
-        ;
-
         $errors = [];
 
         /** @var ErrorCollection $error */
         foreach ($this->errors as $error) {
-            if ($error->isMatch($keys)) {
+            if ($error->getKeys()->equals($keys)) {
                 $errors = array_merge($errors, $error->getErrors());
             }
         }
@@ -65,7 +58,7 @@ final class Result
     {
         $errors = [];
         foreach ($this->errors as $error) {
-            $errors[implode('.', $error->getKeys())] = $error->getErrors();
+            $errors[$error->getKeys()->toString()] = $error->getErrors();
         }
 
         return $errors;

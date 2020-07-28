@@ -4,6 +4,7 @@ namespace Yahiru\Validator\Rule;
 
 use Yahiru\Validator\DependsOtherValueInterface;
 use Yahiru\Validator\Input;
+use Yahiru\Validator\Keys;
 use Yahiru\Validator\RuleInterface;
 use Yahiru\Validator\Value;
 
@@ -11,14 +12,14 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 {
     private string $keyOrDateTime;
 
-    public function __construct(string $keyOrDateTime)
+    public function __construct($keyOrDateTime)
     {
         $this->keyOrDateTime = $keyOrDateTime;
     }
 
     public function getDependsValue(Input $input)
     {
-        $target = $input->get([$this->keyOrDateTime]);
+        $target = $input->get(new Keys($this->keyOrDateTime));
         if (count($target) === 0) {
             return $this->keyOrDateTime;
         }
