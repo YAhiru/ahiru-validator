@@ -23,10 +23,10 @@ final class Validator
      *
      * @param mixed[] $values
      */
-    public function validate(array $values) : Result
+    public function validate(array $values) : ResultInterface
     {
         $input = new Input($values);
-        $errors = [];
+        $result = new Result();
 
         /** @var RuleCollection $rules */
         foreach ($this->rules as $rules) {
@@ -50,8 +50,7 @@ final class Validator
                     $ruleIsValid = $rule->isValid($value);
 
                     if (! $ruleIsValid) {
-                        $errors = self::addError(
-                            $errors,
+                        $result->addError(
                             $match->getKeys(),
                             $this->builder->build($this->aliases, $rules->getAttributeName(), $rule)
                         );
@@ -60,7 +59,7 @@ final class Validator
             }
         }
 
-        return new Result($values, $errors);
+        return $result;
     }
 
     public function define(Keys $attributeKey, string $attributeName) : RuleCollection
@@ -68,24 +67,5 @@ final class Validator
         $this->aliases[$attributeKey->toString()] = $attributeName;
 
         return $this->rules[] = new RuleCollection($attributeKey, $attributeName);
-    }
-
-    /**
-     * @param array<string, ErrorCollection> $errors
-     *
-     * @return array<string, mixed>
-     */
-    private static function addError(array $errors, Keys $keys, string $message) : array
-    {
-        $key = $keys->implode('__separate__');
-        if (! isset($errors[$key])) {
-            $errors[$key] = new ErrorCollection([], $keys);
-        }
-
-        /** @var ErrorCollection $errorCollection */
-        $errorCollection = $errors[$key];
-        $errorCollection->addError($message);
-
-        return $errors;
     }
 }
