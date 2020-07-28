@@ -34,7 +34,7 @@ final class OverwriteMessageTest extends TestCase
                 return (bool) $value->getValue();
             }
 
-            public function getReplacements() : array
+            public function getAttributes() : array
             {
                 return [];
             }
