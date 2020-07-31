@@ -15,7 +15,7 @@ final class MessageBuilder
     }
 
     /**
-     * @param array<int, RuleCollection> $defines
+     * @param array<int, Definition> $defines
      */
     public function build(array $defines, string $attribute, RuleInterface $rule) : string
     {
@@ -43,11 +43,11 @@ final class MessageBuilder
     }
 
     /**
-     * @param array<int, RuleCollection> $defines
+     * @param array<int, Definition> $defines
      */
     private function getAlias(array $defines, Keys $keys) : ?string
     {
-        /** @var RuleCollection $define */
+        /** @var Definition $define */
         foreach ($defines as $define) {
             if ($define->getKeys()->equals($keys)) {
                 return $define->getAttributeName();

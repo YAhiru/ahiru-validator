@@ -8,7 +8,7 @@ use Yahiru\Validator\Rule\OverwriteMessage;
 /**
  * @implements \IteratorAggregate<RuleInterface>
  */
-final class RuleCollection implements \IteratorAggregate
+final class Definition implements \IteratorAggregate
 {
     /**
      * @phpstan-var RuleInterface[]

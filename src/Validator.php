@@ -6,8 +6,8 @@ use Yahiru\Validator\MessageRepository\EnglishMessageRepository;
 
 final class Validator
 {
-    /** @var array<int, RuleCollection> */
-    private array $rules;
+    /** @var array<int, Definition> */
+    private array $definitions = [];
     private MessageBuilder $builder;
 
     public function __construct()
@@ -25,8 +25,8 @@ final class Validator
         $input = new Input($values);
         $result = new Result();
 
-        /** @var RuleCollection $rules */
-        foreach ($this->rules as $rules) {
+        /** @var Definition $rules */
+        foreach ($this->definitions as $rules) {
             $matches = $input->getWithVoid($rules->getKeys());
 
             /** @var Matched $match */
@@ -49,7 +49,7 @@ final class Validator
                     if (! $ruleIsValid) {
                         $result->addError(
                             $match->getKeys(),
-                            $this->builder->build($this->rules, $rules->getAttributeName(), $rule)
+                            $this->builder->build($this->definitions, $rules->getAttributeName(), $rule)
                         );
                     }
                 }
@@ -59,8 +59,8 @@ final class Validator
         return $result;
     }
 
-    public function define(Keys $attributeKey, string $attributeName) : RuleCollection
+    public function define(Keys $attributeKey, string $attributeName) : Definition
     {
-        return $this->rules[] = new RuleCollection($attributeKey, $attributeName);
+        return $this->definitions[] = new Definition($attributeKey, $attributeName);
     }
 }
