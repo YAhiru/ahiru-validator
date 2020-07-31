@@ -11,7 +11,7 @@ final class ErrorCollection
     /**
      * @param string[] $errors
      */
-    public function __construct($errors, Keys $keys)
+    public function __construct(array $errors, Keys $keys)
     {
         $this->errors = $errors;
         $this->keys = $keys;
