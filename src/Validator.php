@@ -44,9 +44,7 @@ final class Validator
                         $value->setDepends($rule->getDependsValue($input));
                     }
 
-                    $ruleIsValid = $rule->isValid($value);
-
-                    if (! $ruleIsValid) {
+                    if (! $rule->isValid($value)) {
                         $result->addError(
                             $match->getKeys(),
                             $this->builder->build($this->definitions, $rules->getAttributeName(), $rule)
