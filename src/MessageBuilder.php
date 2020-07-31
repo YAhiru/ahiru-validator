@@ -15,9 +15,9 @@ final class MessageBuilder
     }
 
     /**
-     * @param array<string, string> $aliases
+     * @param array<int, RuleCollection> $defines
      */
-    public function build(array $aliases, string $attribute, RuleInterface $rule) : string
+    public function build(array $defines, string $attribute, RuleInterface $rule) : string
     {
         if ($rule instanceof OverwriteMessage) {
             return $rule->getMessage();
@@ -29,13 +29,31 @@ final class MessageBuilder
             throw new LogicException();
         }
 
-        /** @var array<string, string> $replacements */
+        /** @var array<string, Keys|string> $replacements */
         $replacements = array_merge(['attribute' => $attribute], $rule->getAttributes());
         foreach ($replacements as $key => $replacement) {
-            $replacement = $aliases[$replacement] ?? $replacement;
+            if ($replacement instanceof Keys) {
+                $replacement = $this->getAlias($defines, $replacement) ?? '';
+            }
+
             $template = str_replace(":${key}", $replacement, $template);
         }
 
         return $template;
+    }
+
+    /**
+     * @param array<int, RuleCollection> $defines
+     */
+    private function getAlias(array $defines, Keys $keys) : ?string
+    {
+        /** @var RuleCollection $define */
+        foreach ($defines as $define) {
+            if ($define->getKeys()->equals($keys)) {
+                return $define->getAttributeName();
+            }
+        }
+
+        return null;
     }
 }

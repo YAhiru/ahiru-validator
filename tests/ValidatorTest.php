@@ -94,7 +94,7 @@ final class ValidatorTest extends TestCase
         $validator->define(new Keys('start_date'), '開始日');
         $validator
             ->define(new Keys('end_date'), '終了日')
-            ->add(new DateTimeAfter('start_date'))
+            ->add(new DateTimeAfter(new Keys('start_date')))
         ;
 
         $result = $validator->validate([

@@ -10,18 +10,18 @@ use Yahiru\Validator\Value;
 
 final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 {
-    private string $keyOrDateTime;
+    private Keys $keys;
 
-    public function __construct(string $keyOrDateTime)
+    public function __construct(Keys $keys)
     {
-        $this->keyOrDateTime = $keyOrDateTime;
+        $this->keys = $keys;
     }
 
     public function getDependsValue(Input $input)
     {
-        $target = $input->get(new Keys($this->keyOrDateTime));
+        $target = $input->get($this->keys);
         if (count($target) === 0) {
-            return $this->keyOrDateTime;
+            return;
         }
 
         return $target[0]->getValue();
@@ -42,7 +42,7 @@ final class DateTimeAfter implements RuleInterface, DependsOtherValueInterface
 
     public function getAttributes() : array
     {
-        return ['after' => $this->keyOrDateTime];
+        return ['after' => $this->keys];
     }
 
     private function createDateTime(string $value) : ?\DateTimeImmutable

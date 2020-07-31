@@ -7,7 +7,7 @@ interface RuleInterface
     public function isValid(Value $value) : bool;
 
     /**
-     * @return array<string, string>
+     * @return array<string, Keys|string>
      */
     public function getAttributes() : array;
 }
